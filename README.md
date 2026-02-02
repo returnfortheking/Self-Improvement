@@ -284,6 +284,54 @@
   - 5个Claude系统是**角色分工**层
   - 两者可以并存，Skills提供更结构化的流程
 
+#### Commit 8: 更新README记录Commit 6和7
+- **日期**：2026-02-02
+- **Commit ID**: a906bf1
+- **Message**: "[System] Update README with Commit 6 and 7 records"
+- **变更**：
+  - 添加Commit 6：更新README记录Commit 5
+  - 添加Commit 7：Skills系统创建记录
+- **文件数**：1个文件修改
+- **背景**：保持Git commit历史的完整性
+
+#### Commit 9: 目录结构整理与JD自动解析
+- **日期**：2026-02-02
+- **Commit ID**: d9a9360
+- **Message**: "System: Reorganize directory and add auto-JD-parsing"
+- **变更**：
+  - **目录结构整理**：
+    - 创建 `jd_data/` 统一管理JD数据
+      - `images/`：61个JD截图（git跟踪）
+      - `raw/`：原始JD文本数据
+      - `metadata.json`：元数据（自动更新）
+    - 创建 `archive/` 归档旧文档
+      - `JD_Details/`：4个JD详细文档（43, 44, AI_Infra, All_Positions_70Plus）
+      - `Old_Assessments/`：2个旧评估文档（Comprehensive_Skills, Mission_Overview）
+    - 创建 `references/` 外部参考资料
+      - `MODULAR-RAG-MCP-SERVER/`：Skills设计参考项目
+  - **JD自动解析功能**：
+    - 更新 `doc-sync/SKILL.md` 添加完整JD解析SOP（Step 1.5）
+    - 更新 `learning-workflow/SKILL.md` Stage 1包含JD解析
+    - 使用Claude原生多模态能力（`extract_text_from_screenshot`）
+    - 自动检测 `jd_data/images/` 新JD
+    - 自动更新 `03_Market_Research_JD_Analysis.md`
+    - 自动更新 `04_Target_Positions_Analysis.md`
+    - 永不要求用户手动触发
+  - **文档更新**：
+    - 更新 `.gitignore`（忽略references下的.git/）
+    - 更新 `README.md`（添加jd_data, archive, references章节）
+- **文件数**：357个文件
+- **背景**：
+  - 用户需求1：jd和JD截图统一到一个目录管理
+  - 用户需求2：jd数据由git跟踪
+  - 用户需求3：非核心文档需要归档
+  - 用户需求4：实现JD自动解析，永不手动触发
+- **核心创新**：
+  - 完全自动化的JD数据管理
+  - 每次learning-workflow运行时自动检测并解析新JD
+  - 使用Claude原生能力，无需Python脚本
+  - 保证03、04文档永远最新
+
 ---
 
 ## 🔍 如何查看Commit历史
