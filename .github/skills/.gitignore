@@ -1,0 +1,17 @@
+# Cache files
+cache/
+*.json
+
+# Hash files
+.spec_hash
+.docs_hash
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# IDE
+.vscode/
+.idea/
