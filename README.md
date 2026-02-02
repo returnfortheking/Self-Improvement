@@ -178,6 +178,34 @@
   - 自动更新机制说明
   - 协作流程示例
 
+#### Commit 5: 设计文档与全局视野
+- **日期**：2026-01-31
+- **Commit ID**: 9d359dc
+- **Message**: "[System] Add design documents for global context"
+- **变更**：
+  - 创建design_documents/00_5_claude_system_design.md（5个Claude系统设计文档）
+  - 创建design_documents/README.md（设计文档说明）
+  - 更新所有5个系统提示词，引用设计文档
+  - 更新README.md，添加设计文档章节
+- **文件数**：8个文件（2个新文件，6个修改）
+- **背景**：
+  - 用户问题2："我们当前的这个对话，是不是没法继承给新增的这5个claude？这是否会导致每个claude缺乏全局视野？"
+  - 用户担心切换Claude对话后丢失设计决策和上下文
+- **核心功能**：
+  - 记录完整的设计决策和演进历程
+  - 所有5个Claude都可以访问全局视野
+  - General和Planner：首次启动必读
+  - Assessor、Teacher、Researcher：建议阅读
+- **设计文档内容**：
+  - 设计目标和架构
+  - 5个角色定义和职责分工
+  - 对话历史可见性设计理念
+  - 设计迭代历程（手动保存 → 自动更新）
+  - 关键设计决策和理由
+  - 使用流程和协作模式
+  - Git管理策略
+  - 常见误区说明
+
 ---
 
 ## 🔍 如何查看Commit历史
