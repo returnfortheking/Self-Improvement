@@ -24,6 +24,14 @@
 | [08_Action_Plan_2026_H1.md](08_Action_Plan_2026_H1.md) | 2026年上半年行动计划 | ✅ 已完成 | 2026-01-28 |
 | [09_Progress_Tracker.md](09_Progress_Tracker.md) | 进度跟踪（每周更新） | 📋 待开始 | - |
 
+### 设计文档
+
+> **重要**：这些文档记录了系统的设计决策和演进历程，是所有Claude的全局视野基础
+
+| 文件 | 内容 | 重要性 | 最后更新 |
+|------|------|--------|----------|
+| [design_documents/00_5_claude_system_design.md](design_documents/00_5_claude_system_design.md) | 5个Claude协作系统设计文档 | ⭐⭐⭐⭐⭐ | 2026-01-31 |
+
 ---
 
 ## 🎯 快速导航
@@ -39,6 +47,12 @@
 - **查看优势与风险** → [07_Strengths_Risks_Analysis.md](07_Strengths_Risks_Analysis.md)
 - **查看行动计划** → [08_Action_Plan_2026_H1.md](08_Action_Plan_2026_H1.md)
 - **更新学习进度** → [09_Progress_Tracker.md](09_Progress_Tracker.md)
+
+### 系统相关
+
+- **了解5个Claude协作系统** → [design_documents/00_5_claude_system_design.md](design_documents/00_5_claude_system_design.md)
+- **查看使用指南** → [HOW_TO_USE.md](HOW_TO_USE.md)
+- **查看变更日志** → [CHANGELOG.md](CHANGELOG.md)
 
 ---
 
@@ -94,7 +108,127 @@
 | 日期 | 文件 | 更新内容 | 更新人 |
 |------|------|---------|--------|
 | 2026-01-28 | 全部文档 | 初始版本创建 | Claude |
-| - | - | - | - |
+| 2026-01-31 | 全部文档 | 基于87个岗位数据更新 | Claude |
+| 2026-01-31 | 19个新文件 | 创建5个Claude协作系统 | Claude |
+| 2026-01-31 | HOW_TO_USE.md | 添加使用指南 | Claude |
+
+---
+
+## 📜 Git提交历史记录（重要！）
+
+### 提交记录（所有commit的详细信息）
+
+#### Commit 1: 项目初始化
+- **日期**：2026-01-31
+- **Commit ID**: 393ea11
+- **Message**: "System: Project initialization"
+- **变更**：
+  - 创建87个岗位市场调研
+  - 完成12个技术栈测试
+  - 创建核心评估文档（01-09）
+  - 测试发现：Python严重遗忘、4项技能超预期
+- **文件数**：78个文件
+- **背景**：信息收集与分析阶段完成
+
+#### Commit 2: 5个Claude协作系统创建
+- **日期**：2026-01-31
+- **Commit ID**: 1579b9b
+- **Message**: "System: Create 5 Claude collaboration architecture"
+- **变更**：
+  - 创建5个Claude角色系统提示词
+  - 创建对话历史目录结构
+  - 创建VSCode工作区配置
+  - 创建Git配置文件
+  - 创建变更日志和规范文档
+- **文件数**：19个新文件
+- **背景**：实现5个Claude协作分工机制
+- **核心设计**：
+  - 通用助手：协调者，可读所有历史
+  - 测试评估：技能测试，可写02/05/00文档
+  - 教学：技术教学，可写conversations/teacher/
+  - 研究：JD收集，可写03/04文档
+  - 计划协调：进度跟踪，可写08/09文档
+
+#### Commit 3: 工作成果自动更新机制
+- **日期**：2026-01-31
+- **Commit ID**: 3187145
+- **Message**: "System: Add auto-update mechanism for work results"
+- **变更**：
+  - 在教学Claude系统提示词中添加自动更新机制
+  - 教学Claude会在对话结束时自动更新学习进度
+- **文件数**：1个文件修改
+- **核心功能**：
+  - 对话结束时（用户说"结束"、"完成"）
+  - 自动更新conversations/summaries/01_learning_progress.md
+  - 自动保存教学记录到conversations/teacher/
+- **触发方式**：用户说"结束"、"完成"、"下次再聊"
+
+#### Commit 4: 使用指南文档
+- **日期**：2026-01-31
+- **Commit ID**: cfdd13b
+- **Message**: "Docs: Add comprehensive usage guide"
+- **变更**：
+  - 创建HOW_TO_USE.md使用指南
+  - 详细说明5个Claude的使用方法
+  - 说明自动更新机制
+- **文件数**：1个新文件
+- **内容**：
+  - 工作区切换方法
+  - 对话历史管理策略
+  - 自动更新机制说明
+  - 协作流程示例
+
+---
+
+## 🔍 如何查看Commit历史
+
+### 查看所有commit
+```bash
+git log --oneline
+```
+
+### 查看某个commit的详细信息
+```bash
+git show <commit-id>
+```
+
+### 按Claude过滤commit
+```bash
+git log --grep="Teacher" --oneline
+git log --grep="System" --oneline
+```
+
+---
+
+## 💡 关于Commit信息记录
+
+### 为什么需要记录？
+
+**问题**：更换Claude对话后，commit上下文会丢失
+- 不知道为什么做这个修改
+- 不知道这个修改解决了什么问题
+- 无法追溯决策过程
+
+**解决方案**：
+1. ✅ **README.md** - 记录所有commit的详细信息
+2. ✅ **CHANGELOG.md** - 记录项目变更历史
+3. ✅ **详细的commit message** - 每个commit说明原因和内容
+
+### 换Claude后如何找回上下文？
+
+**方法1：查看这个README.md**
+- 所有commit信息都记录在这里
+- 包含日期、变更内容、背景
+
+**方法2：查看CHANGELOG.md**
+- 记录项目变更历史
+- 按时间顺序排列
+
+**方法3：查看Git历史**
+```bash
+git log --oneline
+git show <commit-id>
+```
 
 ---
 

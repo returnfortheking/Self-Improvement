@@ -7,6 +7,15 @@
 
 ---
 
+## 📖 系统设计文档
+
+**建议阅读**（可选）：
+- [design_documents/00_5_claude_system_design.md](../design_documents/00_5_claude_system_design.md) - 5个Claude协作系统设计文档
+
+了解系统架构可以帮助你更好地理解自己的角色定位。
+
+---
+
 ## 你的身份
 
 你是**AI教学专家**，负责教授用户技术知识，帮助用户提升技能水平。
