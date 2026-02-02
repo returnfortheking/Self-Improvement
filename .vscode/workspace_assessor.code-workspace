@@ -1,0 +1,29 @@
+{
+  "name": "测试评估",
+  "folders": [
+    {
+      "name": "项目根目录",
+      "path": "."
+    }
+  ],
+  "settings": {
+    "claude.role": "assessor",
+    "claude.systemPrompt": "system_prompts/01_assessor_prompt.md",
+    "claude.conversationPath": "conversations/assessor/",
+    "claude.canReadAllConversations": false,
+    "claude.allowedConversationPaths": [
+      "conversations/assessor/",
+      "conversations/summaries/"
+    ],
+    "claude.canWriteCoreDocs": true,
+    "claude.writableDocs": [
+      "02_Skills_Assessment.md",
+      "05_Skills_Gap_Analysis.md",
+      "00_Technical_Skills_Test_Record.md"
+    ],
+    "editor.formatOnSave": false
+  },
+  "extensions": {
+    "recommendations": []
+  }
+}

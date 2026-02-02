@@ -1,0 +1,24 @@
+{
+  "name": "计划协调",
+  "folders": [
+    {
+      "name": "项目根目录",
+      "path": "."
+    }
+  ],
+  "settings": {
+    "claude.role": "planner",
+    "claude.systemPrompt": "system_prompts/04_planner_prompt.md",
+    "claude.conversationPath": "conversations/planner/",
+    "claude.canReadAllConversations": true,
+    "claude.canWriteCoreDocs": true,
+    "claude.writableDocs": [
+      "08_Action_Plan_2026_H1.md",
+      "09_Progress_Tracker.md"
+    ],
+    "editor.formatOnSave": false
+  },
+  "extensions": {
+    "recommendations": []
+  }
+}

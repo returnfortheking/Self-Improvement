@@ -1,0 +1,28 @@
+{
+  "name": "市场研究",
+  "folders": [
+    {
+      "name": "项目根目录",
+      "path": "."
+    }
+  ],
+  "settings": {
+    "claude.role": "researcher",
+    "claude.systemPrompt": "system_prompts/03_researcher_prompt.md",
+    "claude.conversationPath": "conversations/researcher/",
+    "claude.canReadAllConversations": false,
+    "claude.allowedConversationPaths": [
+      "conversations/researcher/",
+      "conversations/summaries/"
+    ],
+    "claude.canWriteCoreDocs": true,
+    "claude.writableDocs": [
+      "03_Market_Research_JD_Analysis.md",
+      "04_Target_Positions_Analysis.md"
+    ],
+    "editor.formatOnSave": false
+  },
+  "extensions": {
+    "recommendations": []
+  }
+}

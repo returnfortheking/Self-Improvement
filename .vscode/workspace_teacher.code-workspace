@@ -1,0 +1,27 @@
+{
+  "name": "教学助手",
+  "folders": [
+    {
+      "name": "项目根目录",
+      "path": "."
+    }
+  ],
+  "settings": {
+    "claude.role": "teacher",
+    "claude.systemPrompt": "system_prompts/02_teacher_prompt.md",
+    "claude.conversationPath": "conversations/teacher/",
+    "claude.canReadAllConversations": false,
+    "claude.allowedConversationPaths": [
+      "conversations/teacher/",
+      "conversations/summaries/"
+    ],
+    "claude.canWriteCoreDocs": false,
+    "claude.writableDocs": [
+      "conversations/teacher/"
+    ],
+    "editor.formatOnSave": false
+  },
+  "extensions": {
+    "recommendations": []
+  }
+}

@@ -1,0 +1,77 @@
+# ===============================
+# VSCode用户数据（忽略）
+# ===============================
+.vscode/userdata/
+.vscode/settings.json.user
+.history/
+
+# ===============================
+# 当前临时对话（忽略）
+# ===============================
+conversations/current/
+*.session
+
+# ===============================
+# Python相关（忽略）
+# ===============================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# ===============================
+# 系统临时文件（忽略）
+# ===============================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+*.swp
+*.swo
+*~
+*.tmp
+*.bak
+
+# ===============================
+# IDE相关（忽略）
+# ===============================
+.idea/
+*.iml
+*.ipr
+*.iws
+.project
+.classpath
+.settings/
+.vscode/settings.json.user
+
+# ===============================
+# 嵌入的Git仓库（忽略）
+# ===============================
+mcp-bosszp/
+skills/
+
+# ===============================
+# 重要说明：
+# ===============================
+# conversations/ 下的历史记录都要提交
+# 只有conversations/current/临时对话忽略
+# 所有核心文档都要提交
