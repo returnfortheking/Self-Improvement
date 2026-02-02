@@ -206,6 +206,55 @@
   - Git管理策略
   - 常见误区说明
 
+#### Commit 6: 更新README记录Commit 5
+- **日期**：2026-01-31
+- **Commit ID**: 39595b7
+- **Message**: "[System] Update README with Commit 5 record"
+- **变更**：
+  - 在README.md中添加Commit 5详细记录
+  - 记录设计文档创建过程
+  - 记录解决用户问题2的方案
+- **文件数**：1个文件修改
+- **背景**：保持Git commit历史的完整性
+
+#### Commit 7: Skills系统创建（基于MODULAR模式）
+- **日期**：2026-02-02
+- **Commit ID**: bc264ef
+- **Message**: "[System] Create Skills system inspired by MODULAR-RAG-MCP-SERVER"
+- **变更**：
+  - 创建6个核心Skills：learning-workflow, doc-sync, progress-tracker, practice, assessor, checkpoint
+  - 创建完整Skills系统文档
+  - 严格遵循MODULAR-RAG-MCP-SERVER项目的设计模式
+- **文件数**：8个文件（1804行）
+- **背景**：
+  - 用户选择方案B：完全迁移到Skills
+  - 用户要求："尽量和github项目保持一致，不要增加自己的小巧思"
+  - 深入学习MODULAR-RAG-MCP-SERVER的Skills设计
+- **核心功能**：
+  - **learning-workflow**（Meta-Skill）：编排5个stage的完整学习流程
+  - **doc-sync**：同步核心文档，生成缓存
+  - **progress-tracker**：查找下一个学习主题，验证进度真实性
+  - **practice**：执行实战练习，生成练习文件
+  - **assessor**：测试理解程度，评定技能等级
+  - **checkpoint**：保存进度，更新核心文档，生成git commit
+- **设计模式**：
+  - 完全遵循MODULAR项目的YAML frontmatter结构
+  - 每个Skill包含详细的SOP（Standard Operating Procedure）
+  - 明确的Output Contract定义
+  - 关键决策点需要用户确认
+  - 限制迭代次数（最多3次）
+  - Quick Commands表格
+  - Important Rules列表
+- **关键决策**：
+  - 保留现有01-09文档结构（不拆分）
+  - doc-sync生成JSON缓存（待实现sync_docs.py）
+  - 进度验证基于08_Action_Plan_2026_H1.md和09_Progress_Tracker.md
+  - 技能等级更新到02_Skills_Assessment.md
+- **与5个Claude系统的关系**：
+  - Skills系统是**工作流程自动化**层
+  - 5个Claude系统是**角色分工**层
+  - 两者可以并存，Skills提供更结构化的流程
+
 ---
 
 ## 🔍 如何查看Commit历史
