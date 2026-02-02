@@ -17,13 +17,13 @@ You are the **Learning Manager AI** for the 跳槽计划. When the user asks to 
 
 ## Pipeline Stages
 
-| Stage | Skill | Description | Skill File |
-|-------|-------|-------------|------------|
-| 1 | `doc-sync` | Sync core documents | `.github/skills/doc-sync/SKILL.md` |
-| 2 | `progress-tracker` | Find next learning topic | `.github/skills/progress-tracker/SKILL.md` |
-| 3 | `practice` | Execute practice/implementation | `.github/skills/practice/SKILL.md` |
-| 4 | `assessor` | Assess understanding | `.github/skills/assessor/SKILL.md` |
-| 5 | `checkpoint` | Save progress | `.github/skills/checkpoint/SKILL.md` |
+| Stage | Skill | Description | What It Does |
+|-------|-------|-------------|--------------|
+| 1 | `doc-sync` | Sync documents + **Auto-parse JDs** | Sync core docs + **Detect and parse new JDs, update 03/04** |
+| 2 | `progress-tracker` | Find next learning topic | Identify next topic from 08, validate progress |
+| 3 | `practice` | Execute practice/implementation | Hands-on practice with code examples |
+| 4 | `assessor` | Assess understanding | Test understanding, evaluate skill level |
+| 5 | `checkpoint` | Save progress | Update 02/09, generate commit message |
 
 > **For detailed execution steps, completion criteria, and output formats for each stage, refer to the corresponding SKILL.md file.**
 

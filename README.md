@@ -32,6 +32,35 @@
 |------|------|--------|----------|
 | [design_documents/00_5_claude_system_design.md](design_documents/00_5_claude_system_design.md) | 5个Claude协作系统设计文档 | ⭐⭐⭐⭐⭐ | 2026-01-31 |
 
+### JD数据管理（全自动）
+
+> **重要**：新增JD后，learning-workflow自动解析并更新03、04文档
+
+| 目录 | 内容 | 自动化 |
+|------|------|--------|
+| [jd_data/images/](jd_data/images/) | JD截图 | 添加新截图后，learning-workflow自动检测、解析并更新03、04文档 |
+| [jd_data/raw/](jd_data/raw/) | 原始JD文本 | 保留原始数据 |
+| [jd_data/metadata.json](jd_data/metadata.json) | 元数据 | 自动更新（采集记录、统计信息） |
+
+**使用方式**：
+1. 将新JD截图放入 `jd_data/images/`（按命名规范：`YYYY-MM-DD_序号_公司_岗位.jpg`）
+2. 运行任何学习命令（如"开始学习"）
+3. 系统自动检测、解析、更新文档
+4. 无需手动触发
+
+### 归档文件
+
+| 目录 | 内容 | 说明 |
+|------|------|------|
+| [archive/JD_Details/](archive/JD_Details/) | 详细JD数据 | 已被03、04文档整合 |
+| [archive/Old_Assessments/](archive/Old_Assessments/) | 旧评估文档 | 已被01、02文档整合 |
+
+### 参考资料
+
+| 目录 | 内容 | 来源 |
+|------|------|------|
+| [references/MODULAR-RAG-MCP-SERVER/](references/MODULAR-RAG-MCP-SERVER/) | Skills设计参考项目 | [GitHub](https://github.com/jerry-ai-dev/MODULAR-RAG-MCP-SERVER) |
+
 ---
 
 ## 🎯 快速导航

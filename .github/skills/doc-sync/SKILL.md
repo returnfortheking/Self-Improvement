@@ -148,12 +148,220 @@ When called by `learning-workflow`, this skill returns:
 
 ---
 
-## Implementation TODO
+---
 
-This skill needs a Python script `sync_docs.py` to:
-1. Parse markdown files
-2. Extract structured data
-3. Generate JSON cache
-4. Detect changes via hash
+## Step 1.5: JD Data Auto-Sync (Automatic)
 
-**For now, this skill is a placeholder. Other skills should read core documents directly until this is implemented.**
+**Goal**: Automatically detect and parse new JD data, update core documents.
+
+> **This runs automatically every time** learning-workflow Stage 1 executes.
+> User never needs to manually trigger this.
+> Uses Claude's native multimodal capabilities (no Python scripts needed).
+
+### 1.5.1 Detect New JD Images
+
+**Actions**:
+1. Read `jd_data/metadata.json`
+2. Scan `jd_data/images/` directory
+3. Compare with metadata.json to identify new images
+4. List new image files
+
+**Detection Logic**:
+```python
+# Pseudo-code
+known_images = metadata.json.get('processed_images', [])
+current_images = os.listdir('jd_data/images/')
+new_images = [img for img in current_images if img not in known_images]
+```
+
+### 1.5.2 Parse New JDs (Using Claude's Vision)
+
+**For each new image**:
+
+1. **Read the image** using Read tool
+2. **Extract text** using `extract_text_from_screenshot` tool
+3. **Parse JD information**:
+   ```
+   Company: [从文本中提取]
+   Position: [从文本中提取]
+   Salary: [解析薪资范围]
+   Location: [从文本中提取]
+   Requirements: [从文本中提取]
+   ```
+
+**Example Extraction Process**:
+```
+Input: jd_data/images/2026-01-28_001_字节_大模型应用.jpg
+→ Step 1: Read image file
+→ Step 2: Use extract_text_from_screenshot tool
+→ Output:
+  "公司：字节跳动
+   岗位：大模型应用算法工程师
+   薪资：80-110K·15薪
+   地点：上海
+   要求：
+   - 熟悉PyTorch
+   - 有大模型应用经验
+   - ..."
+
+→ Step 3: Parse to structured data:
+  {
+    "company": "字节跳动",
+    "position": "大模型应用算法工程师",
+    "salary_min": 80,
+    "salary_max": 110,
+    "salary_months": 15,
+    "location": "上海",
+    "requirements": ["PyTorch", "大模型应用"]
+  }
+```
+
+### 1.5.3 Update Core Documents
+
+**Target 1: 03_Market_Research_JD_Analysis.md**
+
+Update sections:
+- Update total position count (87 → 92)
+- Add new positions to relevant category
+- Update salary statistics
+- Update source information
+
+**Update Location in Document**:
+Find section `## 📊 岗位数据统计` and update:
+```markdown
+| 数据集 | 岗位数 | 采集时间 | 来源 |
+|--------|--------|----------|------|
+| 初始数据集 | 87 | 2026-01-28 | 招聘网站 |
+| 新增数据 | 5 | 2026-02-02 | jd_data/images/ |
+| **总计** | **92** | - | - |
+```
+
+**Target 2: 04_Target_Positions_Analysis.md**
+
+Update sections:
+- Add new position details to relevant category
+- Update skill requirements summary
+- Update company list if new companies found
+
+### 1.5.4 Update Metadata
+
+**Update jd_data/metadata.json**:
+```json
+{
+  "last_updated": "2026-02-02",
+  "total_positions": 92,
+  "processed_images": [
+    "2026-01-28_001_字节_大模型应用.jpg",
+    "2026-01-28_002_阿里_RAG开发.jpg",
+    "2026-02-02_003_腾讯_AI架构.jpg"
+  ],
+  "last_sync": "2026-02-02T16:30:00Z",
+  "collections": [
+    {
+      "date": "2026-01-28",
+      "source": "招聘网站截图",
+      "count": 87
+    },
+    {
+      "date": "2026-02-02",
+      "source": "jd_data/images/",
+      "count": 5,
+      "note": "Auto-synced by doc-sync"
+    }
+  ]
+}
+```
+
+### 1.5.5 Generate Update Report
+
+```
+────────────────────────────────────────────────────
+✅ JD DATA AUTO-SYNCED
+────────────────────────────────────────────────────
+New JDs Found: 5
+Images Processed:
+  ✅ 2026-01-28_001_字节_大模型应用.jpg
+  ✅ 2026-01-28_002_阿里_RAG开发.jpg
+  ✅ 2026-01-30_003_腾讯_AI架构.jpg
+  ✅ 2026-02-02_004_百度_大模型.jpg
+  ✅ 2026-02-02_005_美团_AI应用.jpg
+
+Parsed Information:
+  - Companies: 字节跳动, 阿里, 腾讯, 百度, 美团
+  - Positions: 5
+  - Salary Range: 30-110K
+
+Documents Updated:
+  ✅ 03_Market_Research_JD_Analysis.md
+     - Positions: 87 → 92
+     - Added: 5 new positions to category
+
+  ✅ 04_Target_Positions_Analysis.md
+     - Updated: 5 position details
+     - Updated: skill requirements summary
+
+Metadata Updated:
+  ✅ jd_data/metadata.json
+  - last_sync: 2026-02-02T16:30:00Z
+────────────────────────────────────────────────────
+```
+
+### 1.5.6 No New JDs Case
+
+If no new images detected:
+
+```
+────────────────────────────────────────────────────
+ℹ️  NO NEW JD DATA
+────────────────────────────────────────────────────
+Current positions: 92
+Last scan: 2026-02-02T16:30:00Z
+Scanned directory: jd_data/images/
+Status: No new images to process
+────────────────────────────────────────────────────
+```
+
+### 1.5.7 Error Handling
+
+**If image extraction fails**:
+```
+⚠️ WARNING: Failed to extract text from image
+  Image: 2026-02-02_XXX.jpg
+  Error: [Error details]
+  Action: Skip this image, continue with others
+```
+
+**If document update fails**:
+```
+❌ ERROR: Failed to update document
+  Document: 03_Market_Research_JD_Analysis.md
+  Error: [Error details]
+  Action: Rollback metadata changes, report to user
+```
+
+---
+
+## Important Notes
+
+- **Never edit cache files directly** — they are auto-generated
+- **Always edit core documents (01-09.md)** and re-run the sync script
+- Cache files are used by other skills for fast access to structured data
+- **JD parsing is fully automatic** — triggered on every learning-workflow run
+- **No Python scripts needed** — uses Claude's native multimodal capabilities
+
+---
+
+## Implementation Status
+
+### ✅ Implemented
+- JD data auto-detection
+- JD text extraction using `extract_text_from_screenshot`
+- Automatic document updates (03, 04)
+- Metadata tracking
+
+### 📋 TODO (Optional Enhancements)
+- Cache file generation for faster access
+- Hash-based change detection
+- Advanced JD categorization
+
+**Current Implementation**: JD parsing uses Claude's native vision capabilities directly, no Python scripts required.
