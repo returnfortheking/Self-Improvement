@@ -1,0 +1,25 @@
+{
+  "article_quality": {
+    "min_length": 1000,
+    "min_views": 500,
+    "min_likes": 20,
+    "required_tags": ["Python", "LLM", "RAG", "Agent", "算法", "系统设计", "源码解析", "异步", "并发"],
+    "exclude_keywords": ["广告", "活动", "赞助", "推广", "招聘"],
+    "must_have_code_or_diagram": true,
+    "prefer_chinese_content": true
+  },
+  "repo_quality": {
+    "min_stars": 100,
+    "max_inactive_days": 180,
+    "prefer_chinese_docs": true,
+    "prefer_recent_updates": true
+  },
+  "content_indexing": {
+    "hash_algorithm": "SHA-256",
+    "min_topic_occurrences": 3,
+    "quality_score_threshold": 7.0,
+    "trend_calculation_days": 30
+  },
+  "last_updated": "2026-02-03",
+  "version": "1.0"
+}

@@ -1,0 +1,210 @@
+{
+  "index_metadata": {
+    "last_updated": "2026-02-03T19:00:00Z",
+    "last_full_scan": "2026-02-03T15:10:00Z",
+    "version": "1.1",
+    "total_files_indexed": 970,
+    "total_topics_found": 30,
+    "scan_type": "incremental",
+    "scan_duration_seconds": 300
+  },
+  "indexed_files": {
+    "chinese_repos": {
+      "cracking-the-python-interview": {
+        "files": 153,
+        "topics": ["Python基础", "Python进阶", "Python高级知识", "排序算法", "查找算法", "链表", "面向对象"],
+        "question_count": 40
+      },
+      "python-job": {
+        "files": 27,
+        "topics": ["高并发", "HTTP/TCP/IP", "Docker", "数据库"],
+        "question_count": 27
+      },
+      "daily-interview": {
+        "files": 194,
+        "topics": ["算法基础", "数据结构", "网络编程"],
+        "question_count": 100
+      },
+      "Python-Interview-Customs-Collection": {
+        "files": 27,
+        "topics": ["面试题汇总"],
+        "question_count": 144
+      },
+      "interview_python": {
+        "files": 41,
+        "topics": ["函数参数", "元类", "装饰器", "类变量", "自省"],
+        "question_count": 76
+      },
+      "awesome-interviews-cn": {
+        "files": 46,
+        "topics": ["面试资源合集"],
+        "question_count": 50
+      }
+    }
+  },
+  "topic_frequency": {
+    "排序": 171,
+    "列表": 103,
+    "算法": 91,
+    "锁": 88,
+    "字符串": 86,
+    "链表": 68,
+    "查找": 60,
+    "字典": 55,
+    "树": 52,
+    "并发": 45,
+    "异步": 38,
+    "装饰器": 35,
+    "生成器": 39,
+    "迭代器": 42
+  },
+  "scan_history": [
+    {
+      "scan_time": "2026-02-03T15:10:00Z",
+      "scan_type": "initial",
+      "repositories_scanned": 4,
+      "files_discovered": 455,
+      "blog_articles_scanned": 0,
+      "duration_seconds": 0,
+      "notes": "Initial scan - file discovery only"
+    },
+    {
+      "scan_time": "2026-02-03T15:17:00Z",
+      "scan_type": "incremental",
+      "repositories_scanned": 1,
+      "files_discovered": 27,
+      "blog_articles_scanned": 0,
+      "duration_seconds": 0,
+      "notes": "Auto-repaired repository URL"
+    },
+    {
+      "scan_time": "2026-02-03T19:00:00Z",
+      "scan_type": "incremental",
+      "repositories_scanned": 6,
+      "files_discovered": 488,
+      "blog_articles_scanned": 0,
+      "duration_seconds": 300,
+      "notes": "Added 6 Chinese Python interview repositories"
+    }
+  ],
+  "repositories_status": [
+    {
+      "name": "baliyanvinay/Python-Interview-Preparation",
+      "url": "https://github.com/baliyanvinay/Python-Interview-Preparation.git",
+      "status": "success",
+      "local_path": "references/github/Python-Interview-Preparation",
+      "size_kb": 184,
+      "last_sync": "2026-02-03T15:09:00Z"
+    },
+    {
+      "name": "matacoder/senior",
+      "url": "https://github.com/matacoder/senior.git",
+      "status": "success",
+      "local_path": "references/github/senior",
+      "size_kb": 1600,
+      "last_sync": "2026-02-03T15:09:00Z"
+    },
+    {
+      "name": "Devinterview-io/python-interview-questions",
+      "url": "https://github.com/Devinterview-io/python-interview-questions.git",
+      "status": "success",
+      "local_path": "references/github/python-interview-questions",
+      "size_kb": 110,
+      "last_sync": "2026-02-03T15:09:00Z"
+    },
+    {
+      "name": "thundergolfer/interview-with-python",
+      "url": "https://github.com/thundergolfer/interview-with-python.git",
+      "status": "success",
+      "local_path": "references/github/interview-with-python",
+      "size_kb": 3100,
+      "last_sync": "2026-02-03T15:09:00Z"
+    },
+    {
+      "name": "coderonion/awesome-llm-and-aigc",
+      "url": "https://github.com/coderonion/awesome-llm-and-aigc.git",
+      "status": "success",
+      "local_path": "references/github/awesome-llm-and-aigc",
+      "size_kb": 478,
+      "last_sync": "2026-02-03T15:17:00Z",
+      "auto_repaired": true,
+      "original_url": "https://github.com/coderion/awesome-llm-and-aigc.git"
+    },
+    {
+      "name": "yuzhouStayHungry/cracking-the-python-interview",
+      "url": "https://github.com/yuzhouStayHungry/cracking-the-python-interview.git",
+      "status": "success",
+      "local_path": "references/github/cracking-the-python-interview",
+      "size_kb": 2500,
+      "last_sync": "2026-02-03T15:45:00Z",
+      "notes": "Python求职面试经验宝典（中文）"
+    },
+    {
+      "name": "nicolz/python-job",
+      "url": "https://github.com/nicolz/python-job.git",
+      "status": "success",
+      "local_path": "references/github/python-job",
+      "size_kb": 500,
+      "last_sync": "2026-02-03T15:45:00Z",
+      "notes": "Python面试相关知识点汇总（中文）"
+    },
+    {
+      "name": "datawhalechina/daily-interview",
+      "url": "https://github.com/datawhalechina/daily-interview.git",
+      "status": "success",
+      "local_path": "references/github/daily-interview",
+      "size_kb": 1800,
+      "last_sync": "2026-02-03T15:45:00Z",
+      "notes": "Datawhale成员整理的面经（中文）"
+    },
+    {
+      "name": "hantmac/Python-Interview-Customs-Collection",
+      "url": "https://github.com/hantmac/Python-Interview-Customs-Collection.git",
+      "status": "success",
+      "local_path": "references/github/Python-Interview-Customs-Collection",
+      "size_kb": 600,
+      "last_sync": "2026-02-03T15:45:00Z",
+      "notes": "Python面试题收集（中文）"
+    },
+    {
+      "name": "taizilongxu/interview_python",
+      "url": "https://github.com/taizilongxu/interview_python.git",
+      "status": "success",
+      "local_path": "references/github/interview_python",
+      "size_kb": 800,
+      "last_sync": "2026-02-03T15:45:00Z",
+      "notes": "Python专项面试题（中文）"
+    },
+    {
+      "name": "andongBlue/awesome-interviews-cn",
+      "url": "https://github.com/andongBlue/awesome-interviews-cn.git",
+      "status": "success",
+      "local_path": "references/github/awesome-interviews-cn",
+      "size_kb": 700,
+      "last_sync": "2026-02-03T15:45:00Z",
+      "notes": "互联网面试找工作资源合集（中文）"
+    }
+  ],
+  "blogs_status": [
+    {
+      "source": "阿里云",
+      "status": "skipped",
+      "notes": "由于环境限制暂时跳过，需要配置WebReader"
+    },
+    {
+      "source": "腾讯技术",
+      "status": "skipped",
+      "notes": "由于环境限制暂时跳过，需要配置WebReader"
+    },
+    {
+      "source": "美团技术团队",
+      "status": "skipped",
+      "notes": "由于环境限制暂时跳过，需要配置WebReader"
+    },
+    {
+      "source": "字节技术团队",
+      "status": "skipped",
+      "notes": "由于环境限制暂时跳过，需要配置WebReader"
+    }
+  ]
+}

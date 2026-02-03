@@ -1,0 +1,83 @@
+{
+  "github_repos": [
+    {
+      "name": "baliyanvinay/Python-Interview-Preparation",
+      "url": "https://github.com/baliyanvinay/Python-Interview-Preparation.git",
+      "category": "python-interview",
+      "enabled": true,
+      "notes": "50个基础到中级Python面试题，有代码示例"
+    },
+    {
+      "name": "matacoder/senior",
+      "url": "https://github.com/matacoder/senior.git",
+      "category": "python-interview",
+      "enabled": true,
+      "notes": "高级Python主题，系统性极强"
+    },
+    {
+      "name": "Devinterview-io/python-interview-questions",
+      "url": "https://github.com/Devinterview-io/python-interview-questions.git",
+      "category": "python-interview",
+      "enabled": true,
+      "notes": "100个核心Python面试题，2026最新"
+    },
+    {
+      "name": "thundergolfer/interview-with-python",
+      "url": "https://github.com/thundergolfer/interview-with-python.git",
+      "category": "python-interview",
+      "enabled": true,
+      "notes": "大量Python练习题，带单元测试"
+    },
+    {
+      "name": "coderonion/awesome-llm-and-aigc",
+      "url": "https://github.com/coderonion/awesome-llm-and-aigc.git",
+      "category": "llm-interview",
+      "enabled": true,
+      "notes": "LLM面试题仓库，包含RAG、Agent相关"
+    },
+    {
+      "name": "yuzhouStayHungry/cracking-the-python-interview",
+      "url": "https://github.com/yuzhouStayHungry/cracking-the-python-interview.git",
+      "category": "python-interview",
+      "enabled": true,
+      "notes": "Python求职面试经验宝典（中文），包含语法、数据结构、算法、操作系统、网络编程、数据库、Python Web"
+    },
+    {
+      "name": "nicolz/python-job",
+      "url": "https://github.com/nicolz/python-job.git",
+      "category": "python-interview",
+      "enabled": true,
+      "notes": "Python面试相关知识点汇总个人整理（中文），涵盖高并发、HTTP/TCP/IP、Docker、数据库等"
+    },
+    {
+      "name": "datawhalechina/daily-interview",
+      "url": "https://github.com/datawhalechina/daily-interview.git",
+      "category": "interview-general",
+      "enabled": true,
+      "notes": "Datawhale成员整理的面经（中文），每个面试者必看"
+    },
+    {
+      "name": "hantmac/Python-Interview-Customs-Collection",
+      "url": "https://github.com/hantmac/Python-Interview-Customs-Collection.git",
+      "category": "python-interview",
+      "enabled": true,
+      "notes": "Python面试题收集（中文），包含经典问题和答案"
+    },
+    {
+      "name": "taizilongxu/interview_python",
+      "url": "https://github.com/taizilongxu/interview_python.git",
+      "category": "python-interview",
+      "enabled": true,
+      "notes": "Python专项面试题（中文），涵盖函数参数、元类、装饰器、类变量、自省等高级话题"
+    },
+    {
+      "name": "andongBlue/awesome-interviews-cn",
+      "url": "https://github.com/andongBlue/awesome-interviews-cn.git",
+      "category": "interview-general",
+      "enabled": true,
+      "notes": "互联网面试找工作资源合集（中文），包含interview_python等Python面试题库"
+    }
+  ],
+  "last_updated": "2026-02-03",
+  "version": "1.1"
+}

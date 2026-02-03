@@ -1,0 +1,60 @@
+{
+  "last_sync_time": "2026-02-03T15:45:00Z",
+  "last_full_scan": "2026-02-03T15:10:00Z",
+  "sync_status": "completed",
+  "repositories": {
+    "total": 11,
+    "synced": 11,
+    "failed": 0,
+    "last_attempt": "2026-02-03T15:45:00Z"
+  },
+  "blogs": {
+    "total": 4,
+    "synced": 0,
+    "articles_downloaded": 0,
+    "last_attempt": "2026-02-03T15:10:00Z"
+  },
+  "content_index": {
+    "exists": true,
+    "total_files_indexed": 970,
+    "total_topics_found": 0,
+    "last_built": "2026-02-03T15:45:00Z"
+  },
+  "errors": [
+    {
+      "type": "skipped",
+      "category": "tech_blogs",
+      "message": "由于环境限制暂时跳过技术博客同步"
+    }
+  ],
+  "auto_repairs": [
+    {
+      "timestamp": "2026-02-03T15:17:00Z",
+      "repository": "coderion/awesome-llm-and-aigc",
+      "original_url": "https://github.com/coderion/coderion/awesome-llm-and-aigc.git",
+      "corrected_url": "https://github.com/coderonion/awesome-llm-and-aigc.git",
+      "repair_method": "web_search",
+      "status": "success"
+    }
+  ],
+  "new_repos_added": [
+    {
+      "timestamp": "2026-02-03T15:45:00Z",
+      "repositories": [
+        "yuzhouStayHungry/cracking-the-python-interview",
+        "nicolz/python-job",
+        "datawhalechina/daily-interview",
+        "hantmac/Python-Interview-Customs-Collection",
+        "taizilongxu/interview_python",
+        "andongBlue/awesome-interviews-cn"
+      ],
+      "total_files": 488,
+      "description": "新增6个中文Python面试仓库"
+    }
+  ],
+  "version": "1.1",
+  "metadata": {
+    "created_at": "2026-02-03",
+    "last_updated": "2026-02-03T15:45:00Z"
+  }
+}

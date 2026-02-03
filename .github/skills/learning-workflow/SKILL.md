@@ -1,117 +1,418 @@
 ---
 name: learning-workflow
-description: Master orchestrator for learning workflow. Use when user says "开始学习", "继续学习", "next topic", "practice", or asks to start learning. Coordinates doc-sync, progress-tracker, practice, assessor, and checkpoint skills in a pipeline to complete one learning topic per iteration.
+description: Intelligent router for learning workflow. Analyzes current state and executes required stages. Use when user says "开始学习", "继续学习", or any learning command.
 metadata:
   category: orchestration
-  triggers: "开始学习, 继续学习, next topic, practice, 学习"
+  triggers: "开始学习, 继续学习, 学习"
 allowed-tools: Read
 ---
 
-# Learning Workflow Orchestrator
+# Learning Workflow Router
 
-You are the **Learning Manager AI** for the 跳槽计划. When the user asks to start learning, you MUST execute the following pipeline **in order**.
+You are the **Intelligent Router** for the 跳槽计划 learning system.
 
-> **This is a Meta-Skill**: It orchestrates other skills. Each stage's **specific implementation details** are defined in the respective skill's SKILL.md file. This file only defines **pipeline flow** and **inter-stage coordination**.
-
----
-
-## Pipeline Stages
-
-| Stage | Skill | Description | What It Does |
-|-------|-------|-------------|--------------|
-| 1 | `doc-sync` | Sync documents + **Auto-parse JDs** | Sync core docs + **Detect and parse new JDs, update 03/04** |
-| 2 | `progress-tracker` | Find next learning topic | Identify next topic from 08, validate progress |
-| 3 | `practice` | Execute practice/implementation | Hands-on practice with code examples |
-| 4 | `assessor` | Assess understanding | Test understanding, evaluate skill level |
-| 5 | `checkpoint` | Save progress | Update 02/09, generate commit message |
-
-> **For detailed execution steps, completion criteria, and output formats for each stage, refer to the corresponding SKILL.md file.**
+> **核心职责**：根据用户命令和当前状态，智能路由到相应的Skill，**不总是执行所有阶段**
+> **数据源**：读取 `.github/skills/registry.yaml` 获取所有Skills配置
+> **执行原则**：按需执行，避免资源浪费
 
 ---
 
-## Pipeline Flow
+## 核心设计原则
+
+### 1. 模块化执行
+- 每个Stage都是独立的Skill，可单独调用
+- 不强制执行完整流程
+- 用户可以精确控制
+
+### 2. 智能路由
+- 读取registry.yaml获取Skills配置
+- 根据用户命令匹配对应Skill
+- 根据当前状态判断需要的阶段
+
+### 3. 配置驱动
+- 所有Skill关系在registry.yaml中定义
+- 添加新Skill无需修改learning-workflow代码
+- 支持未来扩展
+
+---
+
+## 启动时加载配置
+
+每次执行时，首先读取注册表：
 
 ```
-                    ┌──────────────────┐
-                    │  User: "开始学习"  │
-                    └────────┬─────────┘
-                             ▼
-                  ┌──────────────────────┐
-                  │  Stage 1: doc-sync   │
-                  └────────┬─────────────┘
-                           ▼
-                  ┌──────────────────────┐
-                  │ Stage 2: progress-   │
-                  │         tracker      │
-                  └────────┬─────────────┘
-                           │
-                     ️ Exception? ──→ User Confirm → Update 09 → Back to Stage1
-                           │
-                           ▼
-                  ┌──────────────────────┐
-          ┌──────▶│ Stage 3: practice    │
-          │       └────────┬─────────────┘
-          │                ▼
-          │       ┌──────────────────────┐
-          │       │ Stage 4: assessor    │
-          │       └────────┬─────────────┘
-          │                ▼
-          │           ┌─────────┐
-          │           │ Pass?   │
-          │           └────┬────┘
-          │     No         │         Yes
-          │     ┌──────────┴──────────┐
-          │     ▼                     ▼
-          │ Iteration < 3?     ┌──────────────────────┐
-          │     │              │  Stage 5: checkpoint │
-          │ Yes │              └──────────────────────┘
-          └─────┘
-                │ No (iteration >= 3)
-                ▼
-          ┌──────────────────┐
-          │ Escalate to User │
-          └──────────────────┘
+1. 读取 .github/skills/registry.yaml
+2. 解析所有Skills配置
+3. 解析所有Workflows配置
+4. 读取当前状态（09_Progress_Tracker.md）
 ```
 
 ---
 
-## Inter-Stage Data Flow
+## 路由决策逻辑
 
-The orchestrator is responsible for passing context between stages:
+### Step 1: 解析用户命令
 
-| From | To | Data Passed |
-|------|----|-------------|
-| Stage 2 | Stage 3 | Topic ID, Topic Name, Current Skill Level |
-| Stage 3 | Stage 4 | Practice Results, Code Submitted |
-| Stage 4 | Stage 3 | Assessment Failures (on failure, for iteration) |
-| Stage 4 | Stage 5 | Assessment Results, Iteration Count |
-| Stage 2,3,4 | Stage 5 | Topic ID, New Skill Level, Learning Summary |
+```python
+# 伪代码
+def parse_user_command(user_input):
+    # 检查是否明确指定Skill
+    for skill in registry.skills:
+        for trigger in skill.triggers:
+            if trigger in user_input:
+                return {
+                    "type": "direct_skill",
+                    "skill_id": skill.id,
+                    "user_input": user_input
+                }
+
+    # 检查是否是workflow命令
+    if "开始学习" in user_input or "继续学习" in user_input:
+        return {
+            "type": "workflow",
+            "workflow": "learning",
+            "user_input": user_input
+        }
+
+    # 无法判断
+    return {
+        "type": "unknown",
+        "user_input": user_input
+    }
+```
+
+### Step 2: 执行路由
+
+```
+┌─────────────────────────────────────────┐
+│  解析用户命令                              │
+└──────────────┬──────────────────────────┘
+               │
+       ┌────────┴────────┐
+       ▼                 ▼
+  明确Skill         Workflow命令
+       │                 │
+       ▼                 ▼
+  直接调用        分析当前状态
+  指定Skill           │
+                     ▼
+              ┌───────────────┴──────────────┐
+              │ 检查 09_Progress_Tracker │
+              └───────────────┬──────────────┘
+                             │
+                    ┌────────┴────────┐
+                    ▼                 ▼
+              有明确状态         无明确状态
+                    │                 │
+                    ▼                 ▼
+              执行对应阶段        显示状态让用户选择
+```
 
 ---
 
-## Quick Commands
+## Quick Commands Matrix
 
-> **Important Note**: Each execution of "开始学习" completes **one learning topic** (e.g., Python闭包 → Python装饰器), not an entire phase (e.g., Python基础 → RAG).
+基于registry.yaml，支持以下命令：
 
-| User Says | Pipeline Behavior |
-|-----------|-------------------|
-| "开始学习" / "开始学习Python" | Full pipeline (Stage 1-5), completes **next topic** |
-| "继续学习" / "继续练习" | Skip to Stage 3 (assumes topic known) |
-| "检查进度" / "status" | Stage 2 only |
-| "测试我" / "test me" | Stage 4 only |
-| "保存进度" / "save progress" | Stage 5 only |
+### 直接Skill命令（执行单个Skill）
+
+| 命令 | 执行Skill | 使用场景 |
+|------|---------|----------|
+| `/同步文档` | doc-sync | 添加新JD后 |
+| `/查看进度` | progress-tracker | 检查当前状态 |
+| `/生成练习 [主题]` | practice | 需要练习题 |
+| `/总结学习` | summarizer | 完成学习后 |
+| `/评估技能` | assessor | 测试理解程度 |
+| `/保存进度` | checkpoint | 保存并提交 |
+| `/记录面试` | interview-recorder | 面试结束后 |
+| `/help` | - | 显示所有命令 |
+
+### Workflow命令（智能路由）
+
+| 命令 | 行为 | 说明 |
+|------|------|------|
+| `/开始学习 [主题]` | practice → summarizer → (ask) → assessor → checkpoint | 开始学习指定主题 |
+| `/继续学习` | 分析当前状态 → 找到下一步 → 执行 | 从上次中断处继续 |
+| `/开始学习` (无主题) | 分析当前状态 → 找到下一步 → 执行 | 智能判断下一步 |
+
+---
+
+## 智能状态判断
+
+### 读取当前状态
+
+从 `09_Progress_Tracker.md` 和 `conversations/summaries/01_learning_progress.md` 读取：
+
+| 当前状态特征 | 下一步行动 | 执行的Skills |
+|-------------|-----------|-------------|
+| `jd_data/images/` 有新文件 | 需要同步JD | doc-sync |
+| 用户指定主题（如"Python闭包"） | 开始学习这个主题 | practice → summarizer |
+| 刚完成practice（有practice文件） | 需要总结 | summarizer |
+| 刚总结完（01_learning_progress.md已更新） | 询问是否评估 | (ask) → assessor or checkpoint |
+| 无明确状态 | 显示当前进度 | progress-tracker |
+
+### 示例判断流程
+
+```
+用户: /开始学习
+
+AI执行:
+1. 读取 09_Progress_Tracker.md
+2. 检查 jd_data/images/ 有新JD?
+   → Yes: 执行 doc-sync
+3. 检查用户是否指定主题?
+   → Yes (如"Python闭包"): 执行 practice → summarizer
+   → No: 检查当前状态
+4. 根据状态决定下一步...
+```
+
+---
+
+## 执行单个Skill
+
+当用户明确指定Skill时：
+
+### 示例1：用户说 "/生成练习 Python装饰器"
+
+```yaml
+执行: practice skill
+参数:
+  topic: "Python装饰器"
+  source: "用户指定"
+输出: 生成练习题
+```
+
+### 示例2：用户说 "/查看进度"
+
+```yaml
+执行: progress-tracker skill
+参数: {}
+输出: 显示当前技能水平和进度
+```
+
+### 示例3：用户说 "/记录面试"
+
+```yaml
+执行: interview-recorder skill
+参数: {}
+输出: 引导用户记录面试
+```
+
+---
+
+## 执行Workflow
+
+当用户说 "/开始学习" 或 "/继续学习" 时：
+
+### 场景1：用户指定主题
+
+```
+用户: /开始学习 Python闭包
+
+AI执行:
+1. practice (topic="Python闭包")
+2. summarizer (topic="Python闭包")
+3. 询问: "是否评估?"
+   → Yes: assessor → checkpoint
+   → No: 结束
+```
+
+### 场景2：用户未指定主题（智能判断）
+
+```
+用户: /开始学习
+
+AI执行:
+1. 检查当前状态
+   - 如果有新JD → doc-sync
+   - 如果有未完成主题 → 继续
+   - 如果无明确状态 → progress-tracker
+2. 根据状态执行相应Skills
+```
+
+---
+
+## Registry-based Configuration
+
+### 读取Skills配置
+
+从 `.github/skills/registry.yaml` 读取：
+
+```yaml
+skills:
+  - id: practice
+    name: "练习生成"
+    category: "learning"
+    stage: 3
+    triggers: ["生成练习", "practice", "练习"]
+    path: "practice/SKILL.md"
+```
+
+### 动态调用Skill
+
+```python
+# 伪代码
+def invoke_skill(skill_id, context):
+    skill_config = registry.get_skill(skill_id)
+    skill_path = skill_config.path
+
+    # 读取Skill的SKILL.md
+    skill_definition = read_skill_md(skill_path)
+
+    # 执行Skill
+    return execute_skill(skill_definition, context)
+```
+
+---
+
+## 可扩展性设计
+
+### 添加新Skill无需修改learning-workflow
+
+**示例**：添加 `project-planner` skill
+
+1. 创建Skill目录和SKILL.md
+2. 在registry.yaml中添加配置：
+   ```yaml
+   - id: project-planner
+     name: "项目规划"
+     category: "project"
+     triggers: ["规划项目", "project plan"]
+   ```
+3. 完成！learning-workflow自动识别新Skill
+
+### 添加新Workflow
+
+**示例**：添加 `project` workflow
+
+1. 在registry.yaml中添加：
+   ```yaml
+   workflows:
+     project:
+       name: "项目工作流"
+       stages:
+         - project-planner
+         - task-tracker
+   ```
+2. 完成！learning-workflow自动支持新workflow
 
 ---
 
 ## Orchestrator Rules
 
-1. **Delegation**: Each stage's specific logic is defined by its skill; the orchestrator only handles invocation and flow
-2. **Action Plan is Source of Truth**: Learning progress is based on `08_Action_Plan_2026_H1.md` and `09_Progress_Tracker.md`
-3. **Stage Order**: Execute in 1→2→3→4→5 order unless explicitly specified otherwise
-4. **Single Topic**: Each pipeline run completes **one learning topic**
-5. **User Confirmation**: Wait for user confirmation after Stage 2 before continuing
-6. **Assess Before Checkpoint**: Stage 4 must pass before entering Stage 5
-7. **Iteration Discipline**: Enforce 3-iteration limit
-8. **Two-Step Checkpoint**: Stage 5 requires two user confirmations:
-   - First: Verify learning summary (then auto-update 09_Progress_Tracker.md)
-   - Second: Decide whether to execute git commit
+1. **Registry作为单一数据源**：所有Skills配置从registry.yaml读取
+2. **不硬编码Skill名称**：使用registry中的id和triggers
+3. **支持动态扩展**：添加新Skill无需修改本文件
+4. **智能路由优先**：优先执行用户明确指定的Skill
+5. **状态驱动**：根据当前状态智能判断下一步
+6. **资源优化**：按需执行，不浪费资源
+
+---
+
+## Error Handling
+
+### 错误1：registry.yaml不存在
+
+**处理**：
+```
+错误：无法读取Skills注册表 (.github/skills/registry.yaml)
+
+请确保：
+1. registry.yaml 文件存在
+2. YAML格式正确
+3. Skills目录结构完整
+```
+
+### 错误2：找不到指定Skill
+
+**处理**：
+```
+错误：找不到Skill "xxx"
+
+可用的Skills：
+- doc-sync
+- progress-tracker
+- practice
+- summarizer
+- assessor
+- checkpoint
+- interview-recorder
+
+使用 /help 查看所有可用命令
+```
+
+### 错误3：当前状态无法判断
+
+**处理**：
+```
+抱歉，我无法确定下一步操作。
+
+当前状态：[状态描述]
+
+建议：
+1. 查看进度：/查看进度
+2. 选择具体命令：
+   - /生成练习 [主题]
+   - /总结学习
+   - /评估技能
+```
+
+---
+
+## 示例执行流程
+
+### 示例1：学了10分钟Python
+
+```bash
+用户: /开始学习 Python闭包
+
+AI分析:
+- 用户指定主题：Python闭包
+- 无需跑完整流程
+
+AI执行:
+1. practice skill (生成Python闭包练习)
+2. summarizer skill (生成学习总结)
+
+询问: "是否评估?"
+用户: 不需要
+
+结束 ✅ (只执行2个阶段)
+```
+
+### 示例2：添加新JD
+
+```bash
+用户: (把3个新JD截图放到 jd_data/images/)
+用户: /同步文档
+
+AI执行:
+1. doc-sync skill (解析新JD + 更新03/04)
+
+结束 ✅ (只执行1个阶段)
+```
+
+### 示例3：查看进度
+
+```bash
+用户: /查看进度
+
+AI执行:
+1. progress-tracker skill (显示当前状态)
+
+结束 ✅ (只执行1个阶段)
+```
+
+---
+
+## 更新日志
+
+| 版本 | 日期 | 变更 |
+|------|------|------|
+| 2.0 | 2026-02-02 | 重构为智能路由器，支持模块化执行 |
+| 1.0 | 2026-01-31 | 初始版本，固定5阶段流程 |
+
+---
+
+**维护者**：Learning System Architect
+**最后更新**：2026-02-02

@@ -1,0 +1,55 @@
+{
+  "tech_blogs": [
+    {
+      "company": "阿里云",
+      "base_url": "https://developer.aliyun.com/",
+      "article_list_url": "https://developer.aliyun.com/article/",
+      "quality_filter": {
+        "min_views": 1000,
+        "min_likes": 50,
+        "exclude_keywords": ["广告", "活动", "赞助", "推广"],
+        "required_tags": ["Python", "LLM", "RAG", "Agent", "算法", "系统设计", "源码解析"]
+      },
+      "enabled": true,
+      "notes": "阿里云开发者社区，高质量技术文章"
+    },
+    {
+      "company": "腾讯技术",
+      "base_url": "https://cloud.tencent.com/developer",
+      "article_list_url": "https://cloud.tencent.com/developer/article",
+      "quality_filter": {
+        "min_views": 800,
+        "exclude_keywords": ["广告", "活动"],
+        "required_tags": ["Python", "LLM", "RAG", "算法", "系统设计"]
+      },
+      "enabled": true,
+      "notes": "腾讯云开发者社区"
+    },
+    {
+      "company": "美团技术团队",
+      "base_url": "https://tech.meituan.com/",
+      "article_list_url": "https://tech.meituan.com/",
+      "quality_filter": {
+        "min_likes": 30,
+        "exclude_keywords": ["广告", "招聘"],
+        "required_tags": ["分布式", "算法", "系统设计", "Python"]
+      },
+      "enabled": true,
+      "notes": "美团技术团队官方博客，高质量工程实践"
+    },
+    {
+      "company": "字节技术团队",
+      "base_url": "https://techblog.toutiao.com/",
+      "article_list_url": "https://techblog.toutiao.com/",
+      "quality_filter": {
+        "min_views": 1500,
+        "exclude_keywords": ["广告", "活动"],
+        "required_tags": ["算法", "推荐系统", "Python", "架构"]
+      },
+      "enabled": true,
+      "notes": "字节跳动技术博客"
+    }
+  ],
+  "last_updated": "2026-02-03",
+  "version": "1.0"
+}

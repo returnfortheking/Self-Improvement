@@ -351,7 +351,235 @@ Status: No new images to process
 
 ---
 
+## Step 2: External Resources Sync (New)
+
+**Trigger**:
+- Manual: `/更新资源`
+- Automatic: Called by plan-generator when needed
+- Before generating learning paths
+
+**Goal**: Synchronize external resources (GitHub repos + tech blogs) for learning material generation
+
+### 2.1 GitHub Repository Synchronization
+
+**Actions**:
+
+1. **Read Configuration**:
+   - Load `references/metadata/repos_to_sync.json`
+   - Get list of repositories to sync
+
+2. **For Each Repository**:
+   ```bash
+   if repository does not exist locally:
+       git clone --depth 1 <repo_url> <local_path>
+       record: first clone successful
+   else:
+       git pull
+       record: updated to latest commit
+   ```
+
+3. **Statistics Collection**:
+   - Count new files added
+   - Count modified files
+   - Record commit hashes
+
+4. **Space Limit Check**:
+   - Check available space before cloning
+   - Ensure total < 10GB
+   - Skip and warn if limit exceeded
+
+5. **Error Handling**:
+   - Each repository independent try-catch
+   - Failure does not interrupt others
+   - Log errors for manual retry
+
+**Repository Sources** (from repos_to_sync.json):
+- baliyanvinay/Python-Interview-Preparation (Python interview questions)
+- matacoder/senior (Advanced Python topics)
+- Devinterview-io/python-interview-questions (100 core questions)
+- thundergolfer/interview-with-python (Practice exercises)
+- coderion/awesome-llm-and-aigc (LLM interview questions)
+
+---
+
+### 2.2 Tech Blog Synchronization (High-Quality Filtering)
+
+**Actions**:
+
+1. **Read Configuration**:
+   - Load `references/metadata/blogs_to_sync.json`
+   - Get blog sources and quality filters
+
+2. **For Each Blog Source**:
+   - Use `WebReader` to fetch article list
+   - **Intelligent Filtering** (only keep high-quality articles):
+     * Min views/likes (varies by source, 500-1500)
+     * Must include tags: [Python, LLM, RAG, Agent, 算法, 系统设计]
+     * Length > 1000 characters
+     * Must have code examples or diagrams
+     * ❌ Exclude: ads, promotions, activity notifications
+
+3. **Download New Articles**:
+   - Only download articles published since last sync
+   - Save as Markdown files
+   - Organize by company and date
+
+4. **Concurrent Control**:
+   - No concurrency limit (as requested)
+   - Each source independent try-catch
+
+**Blog Sources** (from blogs_to_sync.json):
+- 阿里云开发者社区 (developer.aliyun.com)
+- 腾讯技术 (cloud.tencent.com/developer)
+- 美团技术团队 (tech.meituan.com)
+- 字节技术团队 (techblog.toutiao.com)
+
+---
+
+### 2.3 Update Content Index
+
+**Trigger**: After repository/blog sync completes
+
+**Actions**:
+
+1. **Check Index Status**:
+   - Check if `references/metadata/content_index.json` exists
+   - Determine: first scan or incremental scan
+
+2. **If First Scan** (content_index.json does not exist):
+   - Full scan of all files in `references/`
+   - Calculate SHA-256 hash for each file
+   - Extract topics, questions, tags
+   - Build content_index.json
+   - Estimated time: ~20 minutes
+
+3. **If Incremental Scan** (content_index.json exists):
+   - Compare file hashes
+   - Only process new/modified files (skip 98.6% unchanged files)
+   - Update index
+   - Estimated time: <1 minute
+
+4. **Update Statistics**:
+   - Update `topic_frequency` counts
+   - Calculate quality scores
+   - Identify trending topics
+
+---
+
+### 2.4 Generate Sync Report
+
+```
+────────────────────────────────────────
+✅ External Resources Sync Complete
+────────────────────────────────────────
+
+Time: 2026-02-03 23:00 - 23:45
+Duration: 45 minutes
+
+────────────────────────────────────────
+📦 GitHub Repositories (5)
+────────────────────────────────────────
+
+✅ baliyanvinay/Python-Interview-Preparation
+   - Status: Updated (12 new files)
+   - Latest commit: abc123 (2026-02-02)
+
+✅ matacoder/senior
+   - Status: Updated (5 new files)
+   - Latest commit: def456 (2026-02-01)
+
+⚠️ awesome-llm-and-aigc
+   - Status: Sync failed (connection timeout)
+   - Action: Use /重试同步 awesome-llm-and-aigc
+
+────────────────────────────────────────
+📰 Tech Blogs (152 new articles)
+────────────────────────────────────────
+
+✅ 阿里云 (47 articles)
+  - High-quality: 42 (filtered 5 low-quality)
+  - Main topics: RAG (15), LLM (18), Agent (9)
+
+✅ 腾讯技术 (38 articles)
+  - High-quality: 35
+  - Main topics: 系统设计 (12), 算法 (15)
+
+✅ 美团技术 (35 articles)
+  - High-quality: 32
+  - Main topics: 分布式系统 (18)
+
+✅ 字节技术 (32 articles)
+  - High-quality: 28
+  - Main topics: 推荐系统 (10), 算法 (12)
+
+────────────────────────────────────────
+💾 Storage Space
+────────────────────────────────────────
+
+Used: 2.3GB / 10GB
+Available: 7.7GB
+
+────────────────────────────────────────
+📊 Content Index Updated
+────────────────────────────────────────
+
+Indexed files: 1,250
+Topics found: 85
+Questions extracted: 1,250
+
+Index saved: references/metadata/content_index.json
+
+────────────────────────────────────────
+
+⚠️ Note: 1 repository sync failed, use /重试同步 to retry
+────────────────────────────────────────
+```
+
+---
+
+### 2.5 Automatic Follow-up Actions
+
+**If significant new content detected** (>50 new topics):
+- Automatically trigger plan-generator
+- Generate updated learning path
+- Present update recommendations to user
+
+---
+
+## Quick Commands (Updated)
+
+| User Says | Behavior |
+|-----------|----------|
+| "同步文档" / "sync docs" | Step 1 only (core documents) |
+| "更新资源" / "更新外部资源" | Step 2 only (external resources) |
+| "更新资源 [repo-name]" | Step 2.1 only (specific repo) |
+| "重试同步 [repo-name]" | Retry failed repository sync |
+| "重建索引" | Force Step 2.3 full scan (rebuild index) |
+
+---
+
 ## Implementation Status
+
+### ✅ Implemented (v1.0)
+- JD data auto-detection
+- JD text extraction using `extract_text_from_screenshot`
+- Automatic document updates (03, 04)
+- Metadata tracking
+
+### ✅ Implemented (v2.0 - New)
+- GitHub repository synchronization
+- Tech blog crawling with quality filtering
+- Content index with incremental scanning
+- External resource sync reports
+
+### 📋 TODO (Optional Enhancements)
+- Cache file generation for core documents
+- Hash-based change detection for core documents
+- Advanced JD categorization
+
+**Current Implementation**: Both JD parsing and external resources sync use Claude's native capabilities directly, no Python scripts required.
+
+---
 
 ### ✅ Implemented
 - JD data auto-detection

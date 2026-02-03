@@ -62,16 +62,248 @@ Explicitly state to the user which topic you are practicing and which principles
 
 ---
 
-## Step 2: Practice Planning
-**Goal**: Ensure effective practice design before writing any code.
+## Step 2: Practice Planning (Enhanced with Auto-Generation)
+**Goal**: Automatically generate practice materials from external resources, with user review and partial acceptance.
 
-1.  **File Strategy**: List the files to create for practice (code files, notes, etc.)
-2.  **Practice Design**: Based on the learning principles extracted in Step 1.3:
-    - If **理论+实践** principle applies → Start with concept explanation, then code examples
-    - If **循序渐进** principle applies → Plan difficulty progression (easy → medium → hard)
-    - If **理解度验证** principle applies → Prepare quiz questions or checkpoints
-3.  **Environment Check**: Verify the development environment is ready (Python installed, etc.)
-4.  **Learning Checklist**: Before proceeding, verify your plan addresses each principle from Step 1.3.
+### 2.1 Read Topic Information (Unchanged)
+
+1.  Read topic from progress-tracker output
+2.  Extract learning objectives and skill level targets
+
+### 2.2 Auto-Generate Practice Materials (New)
+
+**Actions**:
+
+1.  **Read Content Index**:
+    - Load `references/metadata/content_index.json`
+    - Search for relevant content by topic tags
+    - Identify high-quality sources (quality_score > 7.0)
+
+2.  **Retrieve Relevant Content**:
+    - From GitHub repos: interview questions, code examples, best practices
+    - From tech blogs: real-world cases, production scenarios
+    - Filter by topic and difficulty level
+
+3.  **Auto-Generate Materials**:
+    - **README.md**: Theory explanations + code examples + references
+    - **examples.py**: Runnable code examples (10-15 examples)
+    - **exercises.py**: Practice exercises (basic + advanced + company questions)
+    - **quiz.md**: Interview questions from major companies (8-10 questions)
+
+4.  **Material Organization**:
+    ```
+    practice/python/01_advanced/Day01_Memory_Model/
+    ├── README.md          # Theory + examples + references
+    ├── examples.py        # 10-15 runnable examples
+    ├── exercises.py       # 15-20 practice exercises
+    ├── quiz.md            # 8-10 interview questions
+    └── .metadata.json     # Source tracking
+    ```
+
+### 2.3 User Review and Partial Acceptance (New)
+
+**Display Preview**:
+```
+────────────────────────────────────────
+📝 Auto-Generated Practice Materials
+────────────────────────────────────────
+
+Topic: Python内存模型
+Generated: 2026-02-03 20:15
+
+Sources:
+  ✅ baliyanvinay/Python-Interview-Preparation
+     - Extracted: 15 interview questions, 8 code examples
+  ✅ matacoder/senior
+     - Extracted: 10 advanced topics, 5 best practices
+  ✅ 阿里云技术博客《Python内存管理最佳实践》
+     - Extracted: 3 production cases
+
+────────────────────────────────────────
+📄 Generated Files Preview
+────────────────────────────────────────
+
+### README.md (1,245 words)
+
+## 理论知识
+Python变量是对象的引用，不是盒子...
+
+## 代码示例
+见 examples.py
+
+## 练习题
+见 exercises.py
+
+## 大厂面试真题
+1. 字节跳动（2025）：is vs == 的区别及底层实现
+2. 阿里巴巴（2024）：深拷贝如何处理循环引用
+3. 腾讯（2025）：解释Python的小整数缓存机制
+[...8 questions total...]
+
+────────────────────────────────────────
+📝 examples.py (150 lines)
+
+# 示例1：is vs == 的区别
+a = [1, 2, 3]
+b = [1, 2, 3]
+print(a is b)  # False
+print(a == b)  # True
+[...10 more examples...]
+
+────────────────────────────────────────
+🏋️ exercises.py (120 lines)
+
+# 基础题（⭐）
+def exercise_1():
+    """
+    实现深拷贝函数
+    要求：
+    1. 支持列表、字典
+    2. 处理循环引用
+    """
+
+# 进阶题（⭐⭐⭐）
+def exercise_2():
+    """
+    实现LRU缓存（使用__slots__优化内存）
+    """
+
+# 大厂真题
+# 字节跳动2025真题：实现对象池
+[...15 more exercises...]
+
+────────────────────────────────────────
+❓ quiz.md (8 questions)
+
+# Q1: is vs == 的区别（字节跳动2025真题）
+**难度**: ⭐⭐
+**频率**: 90%面试遇到
+
+请解释以下代码的输出：
+```python
+a = 256
+b = 256
+print(a is b)  # ?
+
+c = 257
+d = 257
+print(c is d)  # ?
+```
+
+[答案和解析...]
+
+────────────────────────────────────────
+
+Please choose:
+────────────────────────────────────────
+
+1. "all" / "全部接受"
+   → Save all files (README.md, examples.py, exercises.py, quiz.md)
+
+2. "partial" / "部分接受"
+   → Selectively save files
+
+3. "regenerate" / "重新生成"
+   → Adjust parameters and regenerate
+
+4. "modify [specific requirements]"
+   → Modify specific parts
+
+Your choice:
+────────────────────────────────────────
+```
+
+**If User Chooses "partial" (Partial Acceptance)**:
+```
+────────────────────────────────────────
+Select Files to Save:
+────────────────────────────────────────
+
+[✓] README.md        Theory + examples + references
+[✓] examples.py      Code examples (10 examples)
+[ ] exercises.py     Practice exercises (15 questions)
+[✓] quiz.md          Interview questions (8 questions)
+
+Commands:
+  "confirm" → Save selected files (3 files)
+  "toggle [filename]" → Toggle selection
+  "cancel" → Cancel
+
+────────────────────────────────────────
+```
+
+**If User Chooses "regenerate" (Regenerate)**:
+```
+────────────────────────────────────────
+Please tell me your requirements:
+────────────────────────────────────────
+
+Examples:
+  - "更多实战案例"
+  - "理论少一些，代码多一些"
+  - "只要字节跳动的面试题"
+  - "增加美团技术的RAG案例"
+
+Your requirements:
+────────────────────────────────────────
+```
+
+**If User Chooses "modify" (Modify)**:
+```
+────────────────────────────────────────
+Modify: README.md 要更简洁
+────────────────────────────────────────
+
+Current version: 1,245 words
+Target version: ~800 words
+
+Adjustments:
+  - Remove redundant explanations
+  - Keep core concepts
+  - Increase code example ratio
+
+Regenerating...
+
+────────────────────────────────────────
+✅ Modification Complete, Preview:
+────────────────────────────────────────
+
+[Display modified content]
+
+Save changes?
+  "yes" → Save modified file
+  "no" → Discard modification, use original
+────────────────────────────────────────
+```
+
+### 2.4 Save Files (Based on User Choice)
+
+**Save locations**:
+```
+practice/python/01_advanced/Day01_Memory_Model/
+├── README.md          (if accepted)
+├── examples.py        (if accepted)
+├── exercises.py       (if accepted)
+├── quiz.md            (if accepted)
+└── .metadata.json     # Source tracking
+```
+
+**.metadata.json format**:
+```json
+{
+  "topic": "Python内存模型",
+  "generated_at": "2026-02-03T20:15:00Z",
+  "sources": [
+    "baliyanvinay/Python-Interview-Preparation",
+    "阿里云技术博客"
+  ],
+  "files_created": ["README.md", "examples.py", "exercises.py", "quiz.md"]
+}
+```
+
+### 2.5 Continue to Execution (Unchanged)
+
+After files are saved, continue to Step 3 for actual practice execution.
 
 ---
 
