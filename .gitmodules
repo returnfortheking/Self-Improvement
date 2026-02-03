@@ -1,0 +1,39 @@
+[submodule "references/github/Python-Interview-Preparation"]
+	path = references/github/Python-Interview-Preparation
+	url = https://github.com/baliyanvinay/Python-Interview-Preparation.git
+[submodule "references/github/senior"]
+	path = references/github/senior
+	url = https://github.com/matacoder/senior.git
+[submodule "references/github/python-interview-questions"]
+	path = references/github/python-interview-questions
+	url = https://github.com/Devinterview-io/python-interview-questions.git
+[submodule "references/github/interview-with-python"]
+	path = references/github/interview-with-python
+	url = https://github.com/thundergolfer/interview-with-python.git
+[submodule "references/github/awesome-llm-and-aigc"]
+	path = references/github/awesome-llm-and-aigc
+	url = https://github.com/coderonion/awesome-llm-and-aigc.git
+[submodule "references/github/cracking-the-python-interview"]
+	path = references/github/cracking-the-python-interview
+	url = https://github.com/yuzhouStayHungry/cracking-the-python-interview.git
+[submodule "references/github/python-job"]
+	path = references/github/python-job
+	url = https://github.com/nicolz/python-job.git
+[submodule "references/github/daily-interview"]
+	path = references/github/daily-interview
+	url = https://github.com/datawhalechina/daily-interview.git
+[submodule "references/github/Python-Interview-Customs-Collection"]
+	path = references/github/Python-Interview-Customs-Collection
+	url = https://github.com/hantmac/Python-Interview-Customs-Collection.git
+[submodule "references/github/interview_python"]
+	path = references/github/interview_python
+	url = https://github.com/taizilongxu/interview_python.git
+[submodule "references/github/awesome-interviews-cn"]
+	path = references/github/awesome-interviews-cn
+	url = https://github.com/andongBlue/awesome-interviews-cn.git
+[submodule "references/github/assignment1-basics"]
+	path = references/github/assignment1-basics
+	url = https://github.com/stanford-cs336/assignment1-basics.git
+[submodule "references/github/MODULAR-RAG-MCP-SERVER"]
+	path = references/github/MODULAR-RAG-MCP-SERVER
+	url = https://github.com/jerry-ai-dev/MODULAR-RAG-MCP-SERVER.git
