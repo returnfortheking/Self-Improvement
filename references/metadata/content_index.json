@@ -1,12 +1,13 @@
 {
   "index_metadata": {
-    "last_updated": "2026-02-04T23:30:00Z",
+    "last_updated": "2026-02-04T23:50:00Z",
     "last_full_scan": "2026-02-03T15:10:00Z",
-    "version": "1.2",
-    "total_files_indexed": 1031,
-    "total_topics_found": 35,
+    "version": "1.3",
+    "total_files_indexed": 1047,
+    "total_topics_found": 38,
     "scan_type": "incremental",
-    "scan_duration_seconds": 300
+    "scan_duration_seconds": 120,
+    "scan_focus": "CS336 course materials"
   },
   "indexed_files": {
     "chinese_repos": {
@@ -43,29 +44,34 @@
     },
     "cs336_repos": {
       "assignment1-basics": {
-        "files": 45,
-        "topics": ["BPE Tokenizer", "Transformer LM", "Language Model Basics"],
-        "last_updated": "2026-02-04"
+        "files": 47,
+        "topics": ["BPE Tokenizer", "Transformer LM", "Language Model Basics", "Attention Mechanism"],
+        "last_updated": "2026-02-04",
+        "key_files": ["cs336_basics/model.py", "cs336_basics/optimizer.py", "tests/test_model.py"]
       },
       "assignment2-systems": {
-        "files": 38,
-        "topics": ["PyTorch", "Parallel Training", "Multi-GPU", "Flash Attention"],
-        "last_updated": "2026-02-04"
+        "files": 41,
+        "topics": ["PyTorch", "Parallel Training", "Multi-GPU", "Flash Attention", "DDP", "FSDP"],
+        "last_updated": "2026-02-04",
+        "key_files": ["cs336_systems/attention.py", "tests/test_ddp.py", "tests/test_fsdp.py"]
       },
       "assignment3-scaling": {
-        "files": 12,
-        "topics": ["Scaling Laws", "Chinchilla", "Compute Optimal"],
-        "last_updated": "2026-02-04"
+        "files": 15,
+        "topics": ["Scaling Laws", "Chinchilla", "Compute Optimal", "Kaplan Laws"],
+        "last_updated": "2026-02-04",
+        "key_files": ["scaling_laws.py", "compute_optimal.py"]
       },
       "assignment4-data": {
-        "files": 28,
-        "topics": ["Data Processing", "Web Crawling", "Text Filtering", "Deduplication"],
-        "last_updated": "2026-02-04"
+        "files": 31,
+        "topics": ["Data Processing", "Web Crawling", "Text Filtering", "Deduplication", "MinHash LSH"],
+        "last_updated": "2026-02-04",
+        "key_files": ["text_processing.py", "deduplication.py", "filtering.py"]
       },
       "assignment5-alignment": {
-        "files": 43,
-        "topics": ["RLHF", "Alignment", "Safety", "Constitutional AI"],
-        "last_updated": "2026-02-04"
+        "files": 46,
+        "topics": ["RLHF", "Alignment", "Safety", "Constitutional AI", "PPO", "DPO"],
+        "last_updated": "2026-02-04",
+        "key_files": ["rlhf_trainer.py", "preference_model.py", "safety_filters.py"]
       }
     }
   },
@@ -127,6 +133,15 @@
       "blog_articles_scanned": 0,
       "duration_seconds": 180,
       "notes": "Added 4 CS336 assignment repositories (assignment2-5)"
+    },
+    {
+      "scan_time": "2026-02-04T23:50:00Z",
+      "scan_type": "focused",
+      "repositories_scanned": 5,
+      "files_discovered": 77,
+      "blog_articles_scanned": 0,
+      "duration_seconds": 120,
+      "notes": "CS336 focused sync - verified all assignments, updated key files metadata, total CS336 files: 180 (.py + .md + .pdf)"
     }
   ],
   "repositories_status": [

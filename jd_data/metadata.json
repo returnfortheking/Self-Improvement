@@ -1,0 +1,21 @@
+{
+  "last_updated": "2026-02-04T23:50:00Z",
+  "total_images": 15,
+  "processed_images": [],
+  "last_scan": "2026-02-04T23:50:00Z",
+  "collections": [
+    {
+      "date": "2026-02-02",
+      "source": "招聘网站截图",
+      "count": 15,
+      "category": "AI Agent / RAG / LLM Application"
+    }
+  ],
+  "categories": {
+    "AI Agent": 8,
+    "RAG": 3,
+    "LLM Application": 4
+  },
+  "status": "pending_processing",
+  "notes": "JD images detected but not yet processed. Use /文档同步 to process with vision capabilities."
+}
