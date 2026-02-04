@@ -1,10 +1,10 @@
 {
   "index_metadata": {
-    "last_updated": "2026-02-03T19:00:00Z",
+    "last_updated": "2026-02-04T23:30:00Z",
     "last_full_scan": "2026-02-03T15:10:00Z",
-    "version": "1.1",
-    "total_files_indexed": 970,
-    "total_topics_found": 30,
+    "version": "1.2",
+    "total_files_indexed": 1031,
+    "total_topics_found": 35,
     "scan_type": "incremental",
     "scan_duration_seconds": 300
   },
@@ -40,6 +40,33 @@
         "topics": ["面试资源合集"],
         "question_count": 50
       }
+    },
+    "cs336_repos": {
+      "assignment1-basics": {
+        "files": 45,
+        "topics": ["BPE Tokenizer", "Transformer LM", "Language Model Basics"],
+        "last_updated": "2026-02-04"
+      },
+      "assignment2-systems": {
+        "files": 38,
+        "topics": ["PyTorch", "Parallel Training", "Multi-GPU", "Flash Attention"],
+        "last_updated": "2026-02-04"
+      },
+      "assignment3-scaling": {
+        "files": 12,
+        "topics": ["Scaling Laws", "Chinchilla", "Compute Optimal"],
+        "last_updated": "2026-02-04"
+      },
+      "assignment4-data": {
+        "files": 28,
+        "topics": ["Data Processing", "Web Crawling", "Text Filtering", "Deduplication"],
+        "last_updated": "2026-02-04"
+      },
+      "assignment5-alignment": {
+        "files": 43,
+        "topics": ["RLHF", "Alignment", "Safety", "Constitutional AI"],
+        "last_updated": "2026-02-04"
+      }
     }
   },
   "topic_frequency": {
@@ -56,7 +83,13 @@
     "异步": 38,
     "装饰器": 35,
     "生成器": 39,
-    "迭代器": 42
+    "迭代器": 42,
+    "PyTorch": 38,
+    "Transformer": 45,
+    "Scaling Laws": 12,
+    "RLHF": 43,
+    "Data Processing": 28,
+    "Multi-GPU": 38
   },
   "scan_history": [
     {
@@ -85,6 +118,15 @@
       "blog_articles_scanned": 0,
       "duration_seconds": 300,
       "notes": "Added 6 Chinese Python interview repositories"
+    },
+    {
+      "scan_time": "2026-02-04T23:30:00Z",
+      "scan_type": "incremental",
+      "repositories_scanned": 4,
+      "files_discovered": 61,
+      "blog_articles_scanned": 0,
+      "duration_seconds": 180,
+      "notes": "Added 4 CS336 assignment repositories (assignment2-5)"
     }
   ],
   "repositories_status": [

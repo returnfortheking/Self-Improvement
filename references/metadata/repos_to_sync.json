@@ -76,8 +76,43 @@
       "category": "interview-general",
       "enabled": true,
       "notes": "互联网面试找工作资源合集（中文），包含interview_python等Python面试题库"
+    },
+    {
+      "name": "stanford-cs336/assignment1-basics",
+      "url": "https://github.com/stanford-cs336/assignment1-basics.git",
+      "category": "cs336-course",
+      "enabled": true,
+      "notes": "CS336 Assignment 1: BPE Tokenizer + Transformer LM (16MB)"
+    },
+    {
+      "name": "stanford-cs336/assignment2-systems",
+      "url": "https://github.com/stanford-cs336/assignment2-systems.git",
+      "category": "cs336-course",
+      "enabled": true,
+      "notes": "CS336 Assignment 2: Systems and Parallelism (1.8MB)"
+    },
+    {
+      "name": "stanford-cs336/assignment3-scaling",
+      "url": "https://github.com/stanford-cs336/assignment3-scaling.git",
+      "category": "cs336-course",
+      "enabled": true,
+      "notes": "CS336 Assignment 3: Scaling Laws (356KB)"
+    },
+    {
+      "name": "stanford-cs336/assignment4-data",
+      "url": "https://github.com/stanford-cs336/assignment4-data.git",
+      "category": "cs336-course",
+      "enabled": true,
+      "notes": "CS336 Assignment 4: Data Processing (1.6MB)"
+    },
+    {
+      "name": "stanford-cs336/assignment5-alignment",
+      "url": "https://github.com/stanford-cs336/assignment5-alignment.git",
+      "category": "cs336-course",
+      "enabled": true,
+      "notes": "CS336 Assignment 5: Alignment and RLHF"
     }
   ],
-  "last_updated": "2026-02-03",
-  "version": "1.1"
+  "last_updated": "2026-02-04",
+  "version": "1.2"
 }

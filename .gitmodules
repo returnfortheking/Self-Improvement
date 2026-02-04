@@ -37,3 +37,15 @@
 [submodule "references/github/MODULAR-RAG-MCP-SERVER"]
 	path = references/github/MODULAR-RAG-MCP-SERVER
 	url = https://github.com/jerry-ai-dev/MODULAR-RAG-MCP-SERVER.git
+[submodule "references/github/assignment2-systems"]
+	path = references/github/assignment2-systems
+	url = https://github.com/stanford-cs336/assignment2-systems.git
+[submodule "references/github/assignment3-scaling"]
+	path = references/github/assignment3-scaling
+	url = https://github.com/stanford-cs336/assignment3-scaling.git
+[submodule "references/github/assignment4-data"]
+	path = references/github/assignment4-data
+	url = https://github.com/stanford-cs336/assignment4-data.git
+[submodule "references/github/assignment5-alignment"]
+	path = references/github/assignment5-alignment
+	url = https://github.com/stanford-cs336/assignment5-alignment.git
