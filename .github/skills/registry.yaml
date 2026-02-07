@@ -104,7 +104,7 @@ skills:
     category: "interview"
     triggers: ["记录面试", "面试总结", "interview", "面经"]
     dependencies: []
-    path: "interview/interview-recorder/SKILL.md"
+    path: "interview-recorder/SKILL.md"
 
 workflows:
   autonomous-learning:
