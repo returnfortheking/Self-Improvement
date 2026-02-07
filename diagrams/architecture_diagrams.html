@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>InterviewPrep Architecture Diagrams</title>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f5f5f5;
+    }
+    .diagram-container {
+      background: white;
+      border: 1px solid #ddd;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .diagram-title {
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+      margin: 30px 0 10px 0;
+      border-bottom: 2px solid #4CAF50;
+      padding-bottom: 10px;
+    }
+    .diagram-desc {
+      color: #666;
+      margin-bottom: 20px;
+    }
+    h1 {
+      color: #2196F3;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>🚀 InterviewPrep - 架构图集</h1>
+
+  <div class="diagram-title">1. 整体架构图</div>
+  <div class="diagram-desc">展示系统整体架构，包括前端应用层、API 服务层、AI 服务抽象层、业务逻辑层和数据层。</div>
+  <div class="diagram-container">
+    <pre class="mermaid">
+graph TB
+    subgraph 前端应用层
+        Desktop[Electron + React<br/>桌面应用]
+        Mobile[React Native<br/>移动应用]
+    end
+
+    subgraph API服务层
+        API[FastAPI<br/>REST API]
+    end
+
+    subgraph AI服务抽象层
+        AIInterface[AI接口定义]
+        SkillsImpl[Skills实现<br/>当前]
+        AgentImpl[Agent实现<br/>未来]
+    end
+
+    subgraph 业务逻辑层
+        QM[题库管理]
+        IS[模拟面试]
+        PT[学习进度]
+        RO[简历优化]
+        JM[职位匹配]
+        SP[学习计划]
+        KG[知识图谱]
+        REC[智能推荐]
+        IR[面试记录]
+        MM[多模态处理]
+        DS[数据同步]
+    end
+
+    subgraph 数据层
+        MD[Markdown文档<br/>01-09, data/]
+        LG[本地Git仓库]
+        RG[GitHub远程仓库]
+    end
+
+    Desktop --> API
+    Mobile --> API
+    API --> AIInterface
+    AIInterface --> SkillsImpl
+    AIInterface --> AgentImpl
+    API --> QM
+    API --> IS
+    API --> PT
+    API --> RO
+    API --> JM
+    API --> SP
+    API --> KG
+    API --> REC
+    API --> IR
+    API --> MM
+    API --> DS
+
+    QM --> MD
+    IS --> MD
+    PT --> MD
+    RO --> MD
+    JM --> MD
+    SP --> MD
+    KG --> MD
+    REC --> MD
+    IR --> MD
+    MM --> MD
+    DS --> LG
+    LG --> RG
+
+    style Desktop fill:#e1f5ff
+    style Mobile fill:#e1f5ff
+    style SkillsImpl fill:#a0d6e1
+    style AgentImpl fill:#a0d6e1
+    style LG fill:#fff9c4
+    style RG fill:#fff9c4
+    </pre>
+  </div>
+
+  <div class="diagram-title">2. 三层分离架构</div>
+  <div class="diagram-desc">展示表现层、业务逻辑层和数据层的分离架构。</div>
+  <div class="diagram-container">
+    <pre class="mermaid">
+graph TB
+    subgraph 表现层Presentation
+        DA[Electron + React<br/>桌面应用]
+        MA[React Native<br/>移动应用]
+    end
+
+    subgraph 业务逻辑层Business
+        LM[学习模块]
+        IM[面试模块]
+        RM[推荐模块]
+        SM[同步模块]
+    end
+
+    subgraph 数据层Data
+        MF[Markdown文件]
+        GR[Git仓库]
+    end
+
+    DA --> LM
+    DA --> IM
+    DA --> RM
+    DA --> SM
+    MA --> LM
+    MA --> RM
+
+    LM --> MF
+    IM --> MF
+    RM --> MF
+    SM --> GR
+    GR --> MF
+
+    style DA fill:#e1f5ff
+    style MA fill:#e1f5ff
+    style MF fill:#fff9c4
+    style GR fill:#fff9c4
+    </pre>
+  </div>
+
+  <div class="diagram-title">3. 自动 Git 同步架构</div>
+  <div class="diagram-desc">展示自动 Git 同步的流程，包括文件监听、自动提交、冲突处理和远程同步。</div>
+  <div class="diagram-container">
+    <pre class="mermaid">
+graph TB
+    Desktop[Electron桌面] --> FW[FileWatcher<br/>watchdog]
+    Mobile[React Native手机] --> FW
+    FW --> GM[GitManager<br/>GitPython]
+    GM --> CR[ConflictResolver]
+
+    subgraph Git操作
+        LG[本地Git仓库]
+        RG[GitHub远程仓库]
+    end
+
+    GM --> LG
+    LG --> RG
+    RG --> LG
+
+    CR --> GM
+
+    note1[监听data/目录<br/>- 文件修改<br/>- 文件新增<br/>- 文件删除]
+    note1 --> FW
+
+    note2[冲突处理策略:<br/>1. 时间戳合并<br/>2. 基于文件类型<br/>3. 提示用户]
+    note2 --> CR
+
+    note3[同步频率:<br/>- 自动push: 检测到变化后<br/>- 定时pull: 每5分钟<br/>- 手动pull: 用户点击]
+    note3 --> RG
+
+    style Desktop fill:#e1f5ff
+    style Mobile fill:#e1f5ff
+    style LG fill:#fff9c4
+    style RG fill:#fff9c4
+    </pre>
+  </div>
+
+  <div class="diagram-title">4. 系统概览</div>
+  <div class="diagram-desc">展示求职准备系统的完整概览，包括所有组件和外部服务。</div>
+  <div class="diagram-container">
+    <pre class="mermaid">
+graph TB
+    subgraph 求职准备系统
+        subgraph 前端应用
+            Desktop[Electron桌面应用]
+            Mobile[React Native移动应用]
+        end
+
+        subgraph 后端服务
+            API[FastAPI REST API]
+            Skills[Skills系统<br/>现有]
+            Sync[自动Git同步]
+        end
+
+        subgraph 数据层
+            Data[Markdown文档]
+            Git[Git仓库]
+        end
+    end
+
+    subgraph 外部服务
+        GitHub[GitHub]
+        LLM[OpenAI/Claude API]
+    end
+
+    Desktop --> API
+    Mobile --> API
+    API --> Skills
+    API --> Sync
+    API --> Data
+    Sync --> Git
+    Git --> GitHub
+    Skills --> LLM
+
+    note1[现有资产:<br/>- learning-workflow<br/>- doc-sync<br/>- practice<br/>- assessor<br/>- checkpoint<br/>- 完整的数据<br/>  (01-09文档)]
+    note1 --> Skills
+
+    note2[纯Markdown存储<br/>- 01-09核心文档<br/>- data/questions/<br/>- data/positions/<br/>- progress/<br/>- jd_data/ (15个JD)]
+    note2 --> Data
+
+    style Desktop fill:#e1f5ff
+    style Mobile fill:#e1f5ff
+    style Data fill:#fff9c4
+    style Git fill:#fff9c4
+    </pre>
+  </div>
+
+  <div class="diagram-title">5. Skills 系统工作流</div>
+  <div class="diagram-desc">展示现有 Skills 系统的学习工作流。</div>
+  <div class="diagram-container">
+    <pre class="mermaid">
+graph LR
+    LW[learning-workflow<br/>智能路由] --> DS[doc-sync<br/>文档同步]
+    DS --> PT[progress-tracker<br/>进度跟踪]
+    PT --> PR[practice<br/>练习生成]
+    PR --> SM[summarizer<br/>学习总结]
+    SM --> AS[assessor<br/>技能评估]
+    AS --> CP[checkpoint<br/>保存进度]
+
+    CP -->|更新文档| PT
+
+    note1[Meta-Skill:<br/>智能路由学习流程<br/>按需执行阶段]
+    note1 --> LW
+
+    style LW fill:#a0d6e1
+    style CP fill:#ffecb3
+    </pre>
+  </div>
+
+  <div class="diagram-title">6. 技术栈关系图</div>
+  <div class="diagram-desc">展示各技术栈之间的关系和依赖。</div>
+  <div class="diagram-container">
+    <pre class="mermaid">
+graph TB
+    subgraph 前端技术栈
+        Electron[Electron]
+        React[React 18+]
+        TypeScript[TypeScript 5+]
+        AntD[Ant Design]
+        RN[React Native 0.73+]
+        Zustand[Zustand 4+]
+    end
+
+    subgraph 后端技术栈
+        FastAPI[FastAPI 0.110+]
+        Python[Python 3.11+]
+        Uvicorn[Uvicorn]
+        GitPython[GitPython]
+        watchdog[watchdog]
+        Pydantic[Pydantic 2+]
+    end
+
+    subgraph AI集成
+        OpenAI[OpenAI API]
+        Claude[Claude API]
+        Skills[Skills System v2.0]
+        LangGraph[LangGraph<br/>未来]
+        LangChain[LangChain<br/>未来]
+    end
+
+    subgraph 数据存储
+        Markdown[Markdown文件]
+        GitVCS[Git]
+        JSON[JSON]
+    end
+
+    Electron --> React
+    RN --> React
+    React --> TypeScript
+    AntD --> React
+    Zustand --> React
+
+    FastAPI --> Python
+    GitPython --> Python
+    watchdog --> Python
+    Uvicorn --> FastAPI
+    Pydantic --> FastAPI
+
+    Skills --> OpenAI
+    Skills --> Claude
+    LangGraph --> LangChain
+    LangChain --> OpenAI
+    LangChain --> Claude
+
+    Skills --> Markdown
+    GitVCS --> JSON
+    GitVCS --> Markdown
+    </pre>
+  </div>
+
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'default',
+      flowchart: {
+        useMaxWidth: true,
+        htmlLabels: true,
+        curve: 'basis'
+      }
+    });
+  </script>
+</body>
+</html>

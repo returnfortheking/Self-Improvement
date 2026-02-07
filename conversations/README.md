@@ -1,7 +1,8 @@
 # 对话历史目录
 
-> **最后更新**：2026-01-31
-> **说明**：5个Claude的对话历史按角色隔离存储
+> **最后更新**：2026-02-07
+> **说明**：Skills v3.0系统的对话历史和汇总文档
+> **⚠️ 注意**：5个Claude协作系统已废弃，对话历史结构已简化
 
 ---
 
@@ -10,36 +11,68 @@
 ```
 conversations/
 ├── README.md                   # 本文件
-├── summaries/                  # 通用助手生成的汇总
-│   ├── 00_weekly_summary.md   # 每周汇总
-│   ├── 01_learning_progress.md # 学习进度（给教学用）
-│   ├── 02_market_updates.md   # 市场动态（给研究用）
-│   └── 03_assessment_summary.md # 测试评估摘要（给测试用）
-├── general/                   # 通用助手历史
-├── assessor/                  # 测试评估历史
-├── teacher/                   # 教学历史
-├── researcher/                # 研究历史
-├── planner/                   # 计划协调历史
+├── summaries/                  # 自动生成的汇总文档
+│   ├── 00_weekly_summary.md   # 每周汇总（待创建）
+│   ├── 01_learning_progress.md # 学习进度（待创建）
+│   ├── 02_market_updates.md   # 市场动态（待创建）
+│   └── 03_assessment_summary.md # 测试评估摘要（待创建）
+├── general/                   # 通用助手历史（已废弃）
+├── assessor/                  # 测试评估历史（已废弃）
+├── teacher/                   # 教学历史（已废弃）
+├── researcher/                # 研究历史（已废弃）
+├── planner/                   # 计划协调历史（已废弃）
 └── current/                   # 当前临时对话（Git忽略）
 ```
 
 ---
 
-## 对话历史可见性
+## ⚠️ 系统变更说明
 
-### 可读所有历史
-- **通用助手**（General）- 协调者
-- **计划协调**（Planner）- 全局视角
+### 旧系统（已废弃）
+- 5个Claude协作系统
+- 需要切换VSCode工作区
+- 对话历史按角色隔离
+- **状态**：⚠️ 已废弃，文件已移动到`archive/old_systems/`
 
-### 只读自己的历史 + 汇总
-- **测试评估**（Assessor）
-- **教学**（Teacher）
-- **研究**（Researcher）
+### 新系统（Skills v3.0）
+- 单一Skills系统（14个Skills）
+- 无需切换工作区
+- 对话历史由Claude Code自动管理
+- 自动生成汇总文档到`summaries/`
+- **状态**：✅ 当前使用
 
-**理由**：
-- 专用Claude专注自己的职责
-- 避免信息过载
-- 需要全局信息时读summaries/即可
+---
+
+## 对话历史管理
+
+### Skills v3.0的对话历史
+
+**自动管理**：
+- Claude Code自动保存所有对话历史
+- 无需手动管理
+- 无需按角色隔离
+
+**自动汇总**：
+- `auto-syncer`自动生成汇总文档到`summaries/`
+- 汇总内容：
+  - 每周学习进度
+  - JD分析和市场更新
+  - 技能评估总结
+  - 面试准备情况
+
+### 废弃角色目录
+
+以下目录已废弃，保留为历史参考：
+- `general/` - 通用助手历史
+- `assessor/` - 测试评估历史
+- `teacher/` - 教学历史
+- `researcher/` - 研究历史
+- `planner/` - 计划协调历史
+
+**建议**：
+- 这些目录已不再使用
+- 可以删除或保留为历史记录
+- Skills系统不依赖这些目录
 
 ---
 
