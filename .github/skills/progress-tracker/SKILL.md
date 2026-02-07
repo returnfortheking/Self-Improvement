@@ -1,303 +1,289 @@
 ---
 name: progress-tracker
-description: Identify next learning topic from action plan and validate claimed progress against actual skill state. Serves as GPS for learning - tells you where you are and where to go next. Stage 2 of learning-workflow pipeline. Use when user says "检查进度", "status", "下一个学什么", "what's next", "查找任务".
+description: 维护当前进度的文档。每次查看进度时，删除旧文档，生成新文档。生成详细进度报告并保存到conversations/summaries/目录。
 metadata:
   category: progress-tracking
-  triggers: "status, what's next, find topic, 检查进度, 下一个学什么, 查找任务"
-allowed-tools: Read
+  triggers: "status, what's next, find topic, 查看进度, 下一个学什么, 查找任务"
+  autonomous: true
+  auto_start: false
 ---
 
-# Progress Tracker & Topic Discovery
+# Progress Tracker - 进度跟踪器
 
-This skill identifies the **next learning topic** from the action plan and **validates** that claimed progress matches actual skill state. It serves as the "GPS" for learning - telling you where you are and where to go next.
+你是**进度跟踪器**，负责维护一个当前进度的文档。
 
-> **Single Responsibility**: Locate → Validate → Confirm
-
----
-
-## When to Use This Skill
-
-- When you need to **find the next topic** to learn
-- When you want to **check current learning progress**
-- When you suspect **progress tracking is out of sync** with actual skills
-- As **Stage 2** of the `learning-workflow` pipeline
-- After a break to **resume learning** from the correct point
+> **核心理念**：每次查看进度时，删除旧文档，生成新文档
+> **输出**：详细的进度报告，保存到 `conversations/summaries/`
 
 ---
 
-## Workflow
+## 工作流程
 
 ```
-┌──────────────────────────────────────────────────────────────────────────────┐
-│  Step 1              Step 2                Step 3              Step 4        │
-│  ────────            ────────              ────────            ────────      │
-│  Data Collection  →  Progress Validation → Topic Identification → Confirm    │
-│  (Data Prep)         (Validation)          (Topic Confirm)       (User OK)    │
-│                          │                                                   │
-│                          ▼                                                   │
-│                     ️ Mismatch? → Escalate to User → Fix 09_Progress      │
-└──────────────────────────────────────────────────────────────────────────────┘
+用户触发："查看进度"
+    ↓
+1. 读取核心数据文档（01-09）
+2. 分析当前技能水平和进度
+3. 生成详细进度报告
+4. 删除旧的进度报告（如果存在）
+5. 保存新的进度报告
+6. 输出报告摘要
 ```
 
 ---
 
-## Step 1: Data Collection
+## 核心规则
 
-**Goal**: Gather information about claimed progress and actual skill state.
+### 规则 1：进度文档管理
 
-### 1.1 Read Action Plan and Progress
+**文件位置**：`conversations/summaries/progress_report.md`
 
-1. Read `08_Action_Plan_2026_H1.md` (Learning Plan)
-2. Read `09_Progress_Tracker.md` (Progress Tracking)
-3. Parse to identify:
-   - All learning topics and their status markers
-   - Current phase (Python恢复, RAG学习, etc.)
-   - Topics marked as completed vs in-progress vs not-started
+**每次执行时**：
+1. ✅ 删除旧的 `progress_report.md`（如果存在）
+2. ✅ 生成新的 `progress_report.md`
+3. ✅ 带时间戳（YYYY-MM-DD）
 
-### 1.2 Status Marker Recognition
+**文件命名格式**：
+- 主文档：`conversations/summaries/progress_report.md`
+- 历史归档（可选）：`conversations/summaries/progress_report_2026-02-07.md`
 
-| Marker | Meaning | Status |
-|--------|---------|--------|
-| `[ ]` | Not started | `NOT_STARTED` |
-| `` | Not started | `NOT_STARTED` |
-| `[~]` | In progress | `IN_PROGRESS` |
-| `` | In progress | `IN_PROGRESS` |
-| `[x]` | Completed | `COMPLETED` |
-| `` | Completed | `COMPLETED` |
+### 规则 2：数据来源
 
-### 1.3 Build Topic List
+**必须读取的文档**：
+1. `01_Personal_Profile.md` - 个人信息
+2. `02_Skills_Assessment.md` - 技能评估
+3. `08_Action_Plan_2026_H1.md` - 行动计划
+4. `09_Progress_Tracker.md` - 进度跟踪
 
-**Output Structure**:
+**可选读取**：
+- `03_Market_Research_JD_Analysis.md` - 市场调研
+- `04_Target_Positions_Analysis.md` - 目标岗位
+
+### 规则 3：报告结构
+
+**必须包含的章节**：
+
+```markdown
+# 📊 当前进度报告
+
+> **生成时间**：YYYY-MM-DD HH:MM
+> **生成方式**：Skills v3.0 - progress-tracker
+> **数据来源**：01-09 核心文档
+
+---
+
+## 一、整体进度概览
+
+### 时间线状态
+### 阶段进度详情
+### 整体进度百分比
+
+---
+
+## 二、技能提升进度
+
+### 核心技能（必须弥补）
+### 重要技能（需要提升）
+### 核心优势技能（保持+发挥）
+
+---
+
+## 三、学习进度（基于08_Action_Plan_2026_H1.md）
+
+### 月份计划
+### 每周进度
+### 里程碑完成情况
+
+---
+
+## 四、与目标岗位要求的差距分析
+
+### 核心技能要求 vs 当前水平
+### 市场覆盖率
+
+---
+
+## 五、当前主要问题
+
+### 紧急问题
+### 需要关注的问题
+
+---
+
+## 六、学习建议和下一步行动
+
+### 立即行动（本周）
+### 短期目标（2月底）
+### 中期目标（3月底）
+
+---
+
+## 七、每日建议学习时间
+
+### 工作日安排
+### 周末安排
+### 每周总计
+
+---
+
+## 八、成功指标
+
+### 技能提升目标
+### 项目里程碑
+
+---
+
+## 九、总结
+
+### 当前进度
+### 立即行动
 ```
-Phase 1: 基础知识恢复
-  [x] 1.1: Python环境搭建
-  [x] 1.2: Python基础语法
-  [~] 1.3: Python闭包与装饰器  ← CURRENT (in progress)
-  [ ] 1.4: Python异步编程
 
-Phase 2: RAG核心知识
-  [ ] 2.1: Vector Database基础
-  [ ] 2.2: Embedding原理
-  ...
+### 规则 4：智能决策
+
+**基于数据自动生成建议**：
+
+1. **识别紧急项**：
+   - 当前等级 < 目标等级
+   - 目标时间即将到来
+   - 优先级标记为🔴
+
+2. **推荐学习路径**：
+   - 根据进度分析
+   - 优先攻克最大短板
+   - 利用超预期技能加速
+
+3. **调整建议**：
+   - 时间管理建议
+   - 学习资源推荐
+   - 风险预警
+
+### 规则 5：输出格式
+
+**必须提供**：
+
+1. **详细的进度报告** → 保存到 `conversations/summaries/progress_report.md`
+2. **摘要输出** → 显示给用户（简洁版）
+
+**摘要输出格式**：
+```
+📊 当前进度报告已生成
+
+整体进度：XX%（阶段一和二已完成，阶段三-五待开始）
+技能水平：XX项超预期，XX项需要提升
+
+📄 详细报告已保存到：
+conversations/summaries/progress_report.md
+
+💡 立即建议：
+1. [最高优先级]
+2. [高优先级]
+3. [中优先级]
 ```
 
 ---
 
-## Step 2: Progress Validation
+## 执行步骤
 
-**Goal**: Verify that claimed progress matches actual skill state.
+### Step 1: 读取数据
 
-### 2.1 Identify Verification Targets
+**读取顺序**：
+1. `01_Personal_Profile.md`
+2. `02_Skills_Assessment.md`
+3. `08_Action_Plan_2026_H1.md`
+4. `09_Progress_Tracker.md`
 
-For each topic marked as `COMPLETED` or `IN_PROGRESS`, identify expected evidence:
+### Step 2: 分析数据
 
-| Topic | Expected Evidence |
-|------|-------------------|
-| 1.1: Python环境搭建 | `python --version` works, virtualenv created |
-| 1.2: Python基础语法 | Can answer basic questions, practice code exists |
-| 1.3: Python闭包与装饰器 | Can explain concepts, completed practice tasks |
-| 2.1: Vector DB基础 | `02_Skills_Assessment.md` shows ⭐⭐ level |
+**分析内容**：
+1. 整体阶段进度（从 09_Progress_Tracker.md）
+2. 技能水平变化（从 02_Skills_Assessment.md）
+3. 学习计划执行情况（从 08_Action_Plan_2026_H1.md）
+4. 目标岗位要求（从 04_Target_Positions_Analysis.md）
 
-### 2.2 Verify Evidence Exists
+### Step 3: 识别关键信息
 
-For each expected evidence:
-1. Check if `02_Skills_Assessment.md` reflects the skill level
-2. Check if practice code exists in project
-3. Check if conversations/teacher/ has relevant learning records
+**必须提取**：
+- 当前阶段和完成度
+- 所有技能的当前等级和目标等级
+- 学习计划中的本周/本月目标
+- 已完成的里程碑
+- 进度滞后的项目
 
-**Verification Commands**:
+### Step 4: 生成建议
+
+**基于规则 4 的智能决策**
+
+### Step 5: 保存报告
+
+**操作**：
 ```bash
-# Check skill assessment
-grep "Python" 02_Skills_Assessment.md
+# 删除旧的进度报告
+rm -f conversations/summaries/progress_report.md
 
-# Check practice code
-find . -name "*python*practice*" -type f
-
-# Check learning records
-ls conversations/teacher/ | grep python
+# 生成新的进度报告
+write("conversations/summaries/progress_report.md", report_content)
 ```
 
-### 2.3 Detect and Handle Mismatches
+### Step 6: 输出摘要
 
-**Mismatch Types**:
-
-| Type | Description | Severity |
-|------|-------------|----------|
-| `SKILL_LEVEL_MISMATCH` | Topic marked complete but skill level doesn't reflect | High |
-| `NO_PRACTICE_CODE` | Topic marked complete but no practice code found | Medium |
-| `STALE_PROGRESS` | Topic marked "in progress" for multiple sessions | Medium |
-| `MISSING_RECORDS` | No learning records found for completed topic | Low |
-
-**If any mismatch detected**, escalate to user:
-
-```
-────────────────────────────────────────────────────
-️ PROGRESS INCONSISTENCY DETECTED
-────────────────────────────────────────────────────
-
-Plan Claims: Phase 1.3 - Python闭包与装饰器 (in progress)
-Actual State: Phase 1.2 - Python基础语法 (incomplete)
-
-Missing Items:
-   02_Skills_Assessment.md shows Python: ⭐ (expected ⭐⭐)
-   No practice code for decorators found
-   No learning records for closures
-
-────────────────────────────────────────────────────
-OPTIONS:
-────────────────────────────────────────────────────
-
-1. Fix progress tracking in 09_Progress_Tracker.md
-    → Update markers to reflect actual state
-    → Re-run doc-sync
-    → Restart topic discovery
-
-2. Confirm previous topics as completed
-    → Learning may be in different location/format
-    → Provide explanation and proceed
-
-3. Continue from actual progress
-    → Skip incomplete topics
-    → Start from where skills actually are
-
-Please choose an option (1/2/3):
-────────────────────────────────────────────────────
-```
-
----
-
-## Step 3: Topic Identification
-
-**Goal**: Clearly identify the single next topic to learn.
-
-### 3.1 Determine Next Topic
-
-**Priority Logic**:
-1. If any topic is `IN_PROGRESS` → That is the current topic
-2. Otherwise, find the first `NOT_STARTED` topic → That is the next topic
-3. If all topics complete → Report "All topics complete"
-
-### 3.2 Gather Topic Context
-
-For the identified topic, collect:
-- **Topic ID**: e.g., `1.3`, `2.1`
-- **Topic Name**: e.g., "Python闭包与装饰器"
-- **Phase**: e.g., "Phase 1: 基础知识恢复"
-- **Current Skill Level**: From `02_Skills_Assessment.md`
-- **Dependencies**: Previous topics that should be complete
-- **Learning Resources**: References to documentation, tutorials, etc.
-
-### 3.3 Output Topic Information
-
-```
-────────────────────────────────────────────────────
- CURRENT TOPIC IDENTIFIED
-────────────────────────────────────────────────────
-
-Phase:    1 - 基础知识恢复
-Topic ID: 1.3
-Name:     Python闭包与装饰器
-Status:   IN_PROGRESS ()
-
-Current Skill Level: ⭐ (out of ⭐⭐⭐⭐)
-Target Level: ⭐⭐
-
-Plan Reference:
-  Schedule: 08_Action_Plan_2026_H1.md line XX
-  Details:  02_Skills_Assessment.md Section X.X
-
-Dependencies:
-   1.1: Python环境搭建
-   1.2: Python基础语法
-
-Verification: Progress validated
-────────────────────────────────────────────────────
-```
-
----
-
-## Step 4: User Confirmation
-
-**Goal**: Get explicit user confirmation before proceeding.
-
-### 4.1 Request Confirmation
-
-```
-────────────────────────────────────────────────────
- CONFIRM TOPIC
-────────────────────────────────────────────────────
-
-Ready to learn:
-  [1.3] Python闭包与装饰器
-
-Options:
-   Confirm / 确认 - Proceed with this topic
-   Override / 指定其他 - Specify a different topic
-   Cancel / 取消 - Stop and review
-
-Your choice:
-────────────────────────────────────────────────────
-```
-
-### 4.2 Handle User Response
-
-| Response | Action |
-|----------|--------|
-| Confirm / 确认 / Yes | Return topic info to caller (learning-workflow Stage 3) |
-| Override / 指定其他 | Ask for topic ID, validate it exists, return that topic |
-| Cancel / 取消 | Stop the workflow, return to idle state |
+**显示给用户的内容**（简洁版）
 
 ---
 
 ## Quick Commands
 
-| User Says | Behavior |
-|-----------|----------|
-| "status" / "检查进度" | Steps 1-3 (report current state, no confirmation needed) |
-| "what's next" / "下一个学什么" | Steps 1-3 (identify next topic) |
-| "find topic" / "查找任务" | Full workflow (Steps 1-4) |
-| "validate" / "验证进度" | Steps 1-2 only (validation report) |
-| "fix progress" / "修正进度" | Step 2.4 workflow (mismatch handling) |
+| 用户说 | 行为 |
+|--------|------|
+| "查看进度" / "status" | 完整流程（生成报告 + 保存） |
+| "进度摘要" | 只输出摘要，不生成新报告 |
+| "详细进度" | 输出完整报告内容 |
 
 ---
 
-## Output Contract
+## 示例执行
 
-When called by `learning-workflow`, this skill returns:
+### 用户说："查看进度"
 
-**Status Types**: `OK` | `MISMATCH` | `ALL_COMPLETE` | `CANCELLED`
+**系统执行**：
 
-**If status == OK**:
+1. **读取数据**：
+   - 01-09 核心文档
 
-| Field | Example Value |
-|-------|---------------|
-| Topic ID | `1.3` |
-| Topic Name | `Python闭包与装饰器` |
-| Phase | `1 - 基础知识恢复` |
-| Current Skill Level | `⭐` |
-| Target Skill Level | `⭐⭐` |
-| Plan Reference | `08_Action_Plan_2026_H1.md` line 142 |
-| Dependencies Met | Yes/No |
+2. **分析进度**：
+   - 整体进度：10%
+   - 技能水平：Python⭐（严重遗忘）
+   - 学习计划：2月未开始
 
-**If status == MISMATCH**:
-- Claimed Topic vs Actual Topic
-- List of missing evidence
-- User choice needed: Fix 09 / Confirm / Continue from actual
+3. **生成报告**：
+   - 生成详细的进度报告
+   - 保存到 `conversations/summaries/progress_report.md`
+
+4. **输出摘要**：
+```
+📊 当前进度报告已生成
+
+整体进度：10%（阶段一和二已完成，阶段三-五待开始）
+技能水平：5项超预期，3项需要提升
+
+📄 详细报告已保存到：
+conversations/summaries/progress_report.md
+
+💡 立即建议：
+1. 🔴 紧急：开始 Python 系统重学（每天2-3小时）
+2. 🔴 紧急：Prompt 工程系统化总结（本周内开始）
+3. 🟢 重要：确定 LLM 应用技术方案（2周内完成）
+```
+
+---
+
+## 版本历史
+
+| 版本 | 日期 | 变更 |
+|------|------|------|
+| v1.0 | 2026-02-07 | 初始版本 - 维护单个进度文档，删除旧的生成新的 |
 
 ---
 
-## Important Rules
-
-1. **Always Validate Before Proceeding**: Never assume the plan is accurate. Always check actual skill state.
-
-2. **User Confirmation Required**: Don't auto-proceed to practice. Wait for explicit user confirmation.
-
-3. **Single Topic Focus**: Identify ONE topic at a time. Don't batch-identify multiple topics.
-
-4. **Dependency Awareness**: Warn if previous topics appear incomplete, but let user decide how to proceed.
-
-5. **Non-Destructive**: This skill only READS and REPORTS. It doesn't modify core documents (except when user explicitly chooses Option 1 in mismatch handling).
-
-6. **Graceful Degradation**: If doc-sync cache is missing, fall back to reading `08_Action_Plan_2026_H1.md` and `09_Progress_Tracker.md` directly.
-
----
+**维护者**: Progress Tracker Team
+**最后更新**: 2026-02-07
