@@ -87,7 +87,93 @@ of concepts (closures) and practical usage
 
 **Goal**: Run the appropriate assessment and capture results.
 
-### 2.1 Design Assessment Questions/Tasks
+**⚠️ CRITICAL RULE - INTERACTIVE ASSESSMENT ONLY**:
+
+1. **NEVER generate self-assessment documents** for users to evaluate themselves
+2. **MUST conduct interactive assessment** through dialogue:
+   - Ask ONE question at a time
+   - Wait for user's response
+   - Provide feedback before moving to next question
+3. **Keep user engaged** - no long documents to read alone
+4. **Real-time feedback** - correct mistakes immediately, praise good answers
+
+**WRONG** ❌:
+```
+Here's an assessment document with 20 questions.
+Please answer them yourself and check the answers at the bottom.
+```
+
+**CORRECT** ✅:
+```
+Q1: What is a metaclass in Python?
+[Wait for user to answer...]
+
+[Provide feedback on their answer]
+Great! Now let's move to Q2...
+```
+
+### 2.1 Fetch Latest Interview Questions (MANDATORY Step)
+
+**⚠️ CRITICAL REQUIREMENT**: Before generating any assessment, you MUST:
+
+1. **Search Online for Latest Questions** (2025-2026):
+   - Use `WebSearch` or `mcp__web-search-prime__webSearchPrime` tool
+   - Search queries should include:
+     - Topic name + "面试题 2025" + "阿里 腾讯 字节" (for Chinese)
+     - Topic name + "interview questions 2025" + "latest" (for English)
+   - Set `search_recency_filter` to `oneYear` to get recent content
+   - Example queries:
+     - `"Python OOP 面试题 2025 阿里 腾讯 字节 高频"`
+     - `"Python decorator metaclass property 面试题 高频 2025"`
+     - `"Python __init__ __slots__ MRO interview questions 2025"`
+
+2. **Retrieve Content from Latest Articles**:
+   - Use `webReader` or `mcp__web_reader__webReader` tool
+   - Fetch full content from top search results
+   - Focus on articles from:
+     - CSDN (blog.csdn.net)
+     - GeeksforGeeks (www.geeksforgeeks.org)
+     - LeetCode讨论区
+     - 知乎面试题专栏
+
+3. **Combine Online + Local Resources**:
+   - Online (Latest 2025-2026): 70% weight
+   - Local quiz files: 30% weight
+   - Local sources include:
+     - `practice/python/Week1-2/DayXX_*/quiz.md`
+     - `references/github/python-interview/`
+     - `references/tech-blogs/`
+
+4. **Document Your Sources**:
+   - Always list where questions came from
+   - Include date of article (e.g., "CSDN 2025-02-15")
+   - This ensures transparency and shows you followed the process
+
+**Example Output**:
+```
+────────────────────────────────────
+🔍 FETCHING LATEST INTERVIEW QUESTIONS
+────────────────────────────────────
+
+✅ Step 1: Online Search Completed
+Query: "Python OOP 面试题 2025 阿里 腾讯"
+Found 15 articles from last 12 months
+
+✅ Step 2: Content Retrieved
+- GeeksforGeeks Python OOP Interview (2025-07-23)
+- CSDN 32道Python面向对象高频题 (2024-06-15)
+- CSDN Python面试必问20个问题 (2025-07-14)
+
+✅ Step 3: Local Resources Loaded
+- practice/python/Week1-2/Day07-08_OOP/quiz.md (大厂真题)
+
+📊 Source Distribution:
+- Online Latest (2025-2026): 70%
+- Local quiz files: 30%
+────────────────────────────────────
+```
+
+### 2.2 Design Assessment Questions/Tasks
 
 **Quiz Topics** (for concept-heavy topics):
 - Definition and purpose
@@ -102,33 +188,40 @@ of concepts (closures) and practical usage
 - Real-world scenario
 - Performance optimization
 
-### 2.2 Conduct Assessment
+### 2.3 Conduct Interactive Assessment
 
-**Interactive Assessment Flow**:
+**⚠️ MANDATORY INTERACTIVE FORMAT**:
 
 ```
 ────────────────────────────────────
 📝 ASSESSMENT: Python闭包与装饰器
 ────────────────────────────────────
 
-Part 1: Concept Quiz (5 questions)
+🔍 资料来源已确认:
+- ✅ GeeksforGeeks (2025-07-23)
+- ✅ CSDN 32道高频题 (2024-06-15)
+- ✅ 本地quiz.md
+
+────────────────────────────────────
+Part 1: 概念测试
 
 Q1: 什么是闭包？它有什么用途？
+
 [等待用户回答...]
+↓ 用户回答后，AI提供反馈
+↓
+[反馈: 解释正确性，补充知识点]
 
 Q2: 装饰器是如何工作的？
-[等待用户回答...]
-
-...
-
-Part 2: Coding Challenge
-
-Task: 实现一个计时器装饰器，统计函数执行时间
-[等待用户编写代码...]
-
-...
-────────────────────────────────────
+[继续下一题...]
 ```
+
+**Key Principles**:
+1. **One question at a time** - 一次只问一个问题
+2. **Wait for response** - 等待用户回答
+3. **Immediate feedback** - 立即给出反馈
+4. **Adaptive difficulty** - 根据回答调整难度
+5. **Encouraging tone** - 保持鼓励的语气
 
 ### 2.3 Chinese Big Company Interview Simulation (New)
 
@@ -240,10 +333,23 @@ Your choice (1-5):
 
 **Question Bank Sources**:
 
+**PRIMARY Sources (Online Latest - 70% weight)**:
+- 🔍 **2025-2026 Latest Articles** (MANDATORY to fetch):
+  - Use WebSearch tool with queries like:
+    - `"[主题] 面试题 2025 阿里 腾讯 字节"`
+    - `"[主题] interview questions 2025 latest"`
+  - Target sites: CSDN, GeeksforGeeks, LeetCode讨论区, 知乎
+  - Filter: `search_recency_filter=oneYear` (最近12个月)
+  - Retrieve full content using webReader tool
+
+**SECONDARY Sources (Local - 30% weight)**:
 - **Python面试题**: From `references/github/python-interview/`
 - **LLM/RAG/Agent题**: From `references/tech-blogs/` (latest articles)
 - **算法题**: LeetCode中国大厂高频题
 - **系统设计题**: 真实业务场景（美团推荐、阿里高并发、腾讯分布式）
+- **本地Quiz文件**: `practice/python/Week1-2/DayXX_*/quiz.md`
+
+**⚠️ IMPORTANT**: Always prioritize **最新在线资源** over local files. Interview questions evolve rapidly, and 2025 questions may differ significantly from older local files.
 
 **Company-Specific Characteristics**:
 

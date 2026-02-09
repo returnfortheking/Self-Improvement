@@ -85,3 +85,13 @@ references/skills/.git/
 # - jd_data/raw/: 原始JD文本（git跟踪）
 # - jd_data/metadata.json: 元数据（git跟踪，自动更新）
 # 不要忽略jd_data/
+
+# ===============================
+# 移动端项目（忽略临时文件）
+# ===============================
+*.apk
+crash_log.txt
+debug.log
+opencode.log
+mobile_backup/
+1.py
