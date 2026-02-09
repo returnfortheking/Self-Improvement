@@ -1,15 +1,89 @@
 {
   "index_metadata": {
-    "last_updated": "2026-02-04T23:50:00Z",
+    "last_updated": "2026-02-09T12:00:00Z",
     "last_full_scan": "2026-02-03T15:10:00Z",
-    "version": "1.3",
-    "total_files_indexed": 1047,
-    "total_topics_found": 38,
-    "scan_type": "incremental",
-    "scan_duration_seconds": 120,
-    "scan_focus": "CS336 course materials"
+    "version": "1.4",
+    "total_files_indexed": 1169,
+    "total_topics_found": 52,
+    "scan_type": "full_repository_sync",
+    "scan_duration_seconds": 300,
+    "scan_focus": "Python-100-Days complete repository sync"
   },
   "indexed_files": {
+    "tutorial_repos": {
+      "Python-100-Days": {
+        "files": 102,
+        "topics": [
+          "Python基础",
+          "变量与运算符",
+          "分支与循环",
+          "列表",
+          "元组",
+          "字符串",
+          "集合",
+          "字典",
+          "函数",
+          "模块",
+          "闭包",
+          "装饰器",
+          "生成器",
+          "迭代器",
+          "面向对象",
+          "类与对象",
+          "封装",
+          "继承",
+          "多态",
+          "异常处理",
+          "文件操作",
+          "序列化",
+          "CSV",
+          "Excel",
+          "Word",
+          "PowerPoint",
+          "PDF",
+          "图像处理",
+          "邮件",
+          "正则表达式",
+          "Python进阶",
+          "Web前端",
+          "Linux",
+          "MySQL",
+          "SQL",
+          "Django",
+          "RESTful",
+          "网络爬虫",
+          "并发编程",
+          "多线程",
+          "多进程",
+          "数据分析",
+          "NumPy",
+          "pandas",
+          "数据可视化",
+          "机器学习",
+          "深度学习",
+          "Docker",
+          "项目部署"
+        ],
+        "day_coverage": [
+          "Day01-20",
+          "Day21-30",
+          "Day31-35",
+          "Day36-45",
+          "Day46-60",
+          "Day61-65",
+          "Day66-80",
+          "Day81-90",
+          "Day91-100"
+        ],
+        "question_count": 3,
+        "code_examples": 466,
+        "last_updated": "2026-02-09",
+        "source": "https://github.com/jackfrued/Python-100-Days",
+        "size_mb": 288,
+        "description": "Python入门到进阶的100天学习教程，涵盖基础语法、数据结构、面向对象、Web开发、爬虫、数据分析、机器学习等",
+        "supplement_materials": 7
+      }
+    },
     "chinese_repos": {
       "cracking-the-python-interview": {
         "files": 153,
@@ -95,7 +169,37 @@
     "Scaling Laws": 12,
     "RLHF": 43,
     "Data Processing": 28,
-    "Multi-GPU": 38
+    "Multi-GPU": 38,
+    "Python基础": 20,
+    "变量": 15,
+    "运算符": 12,
+    "分支": 10,
+    "循环": 10,
+    "元组": 8,
+    "集合": 8,
+    "函数": 18,
+    "模块": 8,
+    "闭包": 6,
+    "面向对象": 15,
+    "类": 12,
+    "对象": 12,
+    "封装": 8,
+    "继承": 10,
+    "多态": 8,
+    "异常处理": 12,
+    "文件操作": 10,
+    "正则表达式": 8,
+    "MySQL": 15,
+    "SQL": 12,
+    "Django": 15,
+    "爬虫": 12,
+    "多线程": 10,
+    "多进程": 10,
+    "NumPy": 18,
+    "pandas": 20,
+    "数据可视化": 15,
+    "机器学习": 20,
+    "深度学习": 15
   },
   "scan_history": [
     {
@@ -142,6 +246,15 @@
       "blog_articles_scanned": 0,
       "duration_seconds": 120,
       "notes": "CS336 focused sync - verified all assignments, updated key files metadata, total CS336 files: 180 (.py + .md + .pdf)"
+    },
+    {
+      "scan_time": "2026-02-09T12:00:00Z",
+      "scan_type": "full_repository_sync",
+      "repositories_scanned": 1,
+      "files_discovered": 102,
+      "blog_articles_scanned": 0,
+      "duration_seconds": 300,
+      "notes": "Python-100-Days complete sync - scanned all 100 Days, generated 7 supplement materials, indexed 466 code examples"
     }
   ],
   "repositories_status": [
@@ -240,6 +353,15 @@
       "size_kb": 700,
       "last_sync": "2026-02-03T15:45:00Z",
       "notes": "互联网面试找工作资源合集（中文）"
+    },
+    {
+      "name": "jackfrued/Python-100-Days",
+      "url": "https://github.com/jackfrued/Python-100-Days.git",
+      "status": "success",
+      "local_path": "references/github/Python-100-Days",
+      "size_kb": 288000,
+      "last_sync": "2026-02-09T12:00:00Z",
+      "notes": "Python入门到进阶的100天学习教程（中文），涵盖基础到高级全栈开发"
     }
   ],
   "blogs_status": [

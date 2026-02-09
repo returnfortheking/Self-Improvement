@@ -111,8 +111,15 @@
       "category": "cs336-course",
       "enabled": true,
       "notes": "CS336 Assignment 5: Alignment and RLHF"
+    },
+    {
+      "name": "jackfrued/Python-100-Days",
+      "url": "https://github.com/jackfrued/Python-100-Days.git",
+      "category": "python-tutorial",
+      "enabled": true,
+      "notes": "Python - 100天从新手到大师，系统性Python教程，包含OOP、并发、网络编程等，非常适合学习材料补充"
     }
   ],
-  "last_updated": "2026-02-04",
-  "version": "1.2"
+  "last_updated": "2026-02-09",
+  "version": "1.3"
 }

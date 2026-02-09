@@ -94,4 +94,14 @@ crash_log.txt
 debug.log
 opencode.log
 mobile_backup/
+mobile_skills_mvp/
+SkillsMobile*.apk
+
+# ===============================
+# 临时脚本和文件
+# =================<arg_value>tmp_*.py
+tmp_*.json
+generate_supplements.py
+analyze_supplements.py
+verify_content.py
 1.py
