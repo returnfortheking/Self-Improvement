@@ -49,3 +49,6 @@
 [submodule "references/github/assignment5-alignment"]
 	path = references/github/assignment5-alignment
 	url = https://github.com/stanford-cs336/assignment5-alignment.git
+[submodule "references/github/Python-100-Days"]
+	path = references/github/Python-100-Days
+	url = https://github.com/jackfrued/Python-100-Days.git
