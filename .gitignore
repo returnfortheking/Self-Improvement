@@ -94,8 +94,8 @@ crash_log.txt
 debug.log
 opencode.log
 mobile_backup/
-mobile_skills_mvp/
 SkillsMobile*.apk
+# mobile_skills_mvp/ 已纳入主仓库，不再忽略
 
 # ===============================
 # 临时脚本和文件
