@@ -99,9 +99,20 @@ SkillsMobile*.apk
 
 # ===============================
 # 临时脚本和文件
-# =================<arg_value>tmp_*.py
+# ===============================
+tmp_*.py
 tmp_*.json
 generate_supplements.py
 analyze_supplements.py
 verify_content.py
 1.py
+
+# ===============================
+# 内容验证临时文件
+# ===============================
+test_*.py
+comprehensive_test_report.py
+CODE_VERIFICATION_REPORT.md
+CRITICAL_ISSUES_SUMMARY.md
+Backend_Fullstack_Interview_Requirements_2025.md
+MemoryModule_Part*.md
