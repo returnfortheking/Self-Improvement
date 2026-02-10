@@ -385,6 +385,166 @@ Action Required:
 
 ---
 
+### 2.5 Content Verification (MANDATORY for Learning Materials)
+
+**⚠️ CRITICAL REQUIREMENT**: Before generating or updating learning materials, you MUST verify all code examples and technical claims.
+
+**Why This Is Critical**:
+- Even official sources (like Python-100-Days) may contain bugs
+- Edge cases (like `is_prime(1)`) are often overlooked
+- APIs get deprecated (like `asyncio.get_event_loop()`)
+- Misleading explanations can cause production bugs
+
+**Verification Checklist**:
+
+#### ✅ Rule 1: All Code Must Be Tested
+
+For each code example in learning materials:
+1. **Extract the code** from the document
+2. **Create a test script** and run it
+3. **Verify the output matches the documented result**
+4. **Test edge cases**:
+   - Boundary values (0, 1, -1, empty list)
+   - Error conditions
+   - Type mismatches
+
+**Example**:
+```python
+# Document claims this works:
+is_prime = lambda x: all(map(lambda f: x % f, range(2, int(x ** 0.5) + 1)))
+
+# Verification must test:
+print(is_prime(2))   # True
+print(is_prime(1))   # Should be False! Bug found!
+print(is_prime(0))   # Should be False!
+```
+
+**Tool Usage**:
+```bash
+# Write test script to temporary file
+# Run with: python test_script.py
+# Verify all outputs match documentation
+```
+
+#### ✅ Rule 2: Test Boundary Conditions
+
+Common edge cases that are often missed:
+
+- **Numeric functions**: 0, 1, -1, empty string
+- **Collections**: empty list, single element
+- **Recursion**: base case, stack overflow
+- **Async/Thread**: race conditions, deadlocks
+- **Type conversions**: None, wrong types
+
+**Example**:
+```python
+# Always test these:
+factorial(0)   # Edge case
+factorial(1)   # Edge case
+factorial(-1)  # Should handle error
+```
+
+#### ✅ Rule 3: Never Trust "Official" Sources Blindly
+
+Even high-quality repositories may have issues:
+- **Python-100-Days**: Found 5 bugs (is_prime edge case, deprecated API, thread safety claims)
+- **Official docs**: May use outdated patterns
+- **Stack Overflow**: Accepted answers may be wrong
+
+**Verification Process**:
+1. Read the source code/documentation
+2. **Run the code yourself**
+3. Check if it follows current best practices
+4. Look for deprecated APIs or patterns
+5. Verify all technical claims
+
+**Example - What We Found**:
+
+```python
+# Bug 1: is_prime function edge case
+is_prime = lambda x: all(map(lambda f: x % f, range(2, int(x ** 0.5) + 1)))
+is_prime(1)  # Returns True! WRONG! 1 is not prime
+
+# Bug 2: Deprecated asyncio API
+loop = asyncio.get_event_loop()  # Deprecated in Python 3.10+
+# Should use: asyncio.run(main())
+
+# Bug 3: Misleading thread safety claim
+"Python lists, dicts, sets are thread-safe"  # MISLEADING!
+# Truth: Atomic operations are safe, compound operations are NOT
+if x in my_list: my_list.remove(x)  # NOT thread-safe!
+```
+
+#### ✅ Rule 4: Demand Concrete Evidence from Agents
+
+When using Agent tools (Task, Explore, etc.) to verify content:
+
+**❌ Unacceptable**:
+```
+Agent: "I checked the file and found no errors."
+```
+
+**✅ Required**:
+```
+Agent: "I found 5 issues:
+
+1. Line 541: is_prime bug
+   - Code: is_prime = lambda x: ...
+   - Test result: is_prime(1) returns True (wrong)
+   - Fix: Add x > 1 check
+
+2. Line 644: Thread safety claim
+   - Claim: "Lists are thread-safe"
+   - Counter-example: if x in list: list.remove(x)
+   - This is NOT thread-safe in multi-threaded context
+
+[Provides code examples, test results, line numbers]
+```
+
+**What "Concrete Evidence" Means**:
+- ✅ Line numbers where issues are found
+- ✅ Exact code that demonstrates the bug
+- ✅ Test results (actual vs expected)
+- ✅ Proposed fix with explanation
+- ❌ NOT "looks good" or "seems correct"
+
+#### ✅ Rule 5: Document All Findings
+
+Create a verification report with:
+- File name and location
+- Issue type (Bug / Misleading / Outdated)
+- Code example showing the problem
+- Suggested fix
+- Severity level (High / Medium / Low)
+
+**Report Format**:
+```markdown
+## Content Verification Report
+
+### File: Day03-04_Functions_Closures/PYTHON100DAYS_FULL.md
+
+#### Issue 1: is_prime Edge Case Bug (High)
+- **Line**: 541
+- **Code**: `is_prime = lambda x: all(map(...))`
+- **Problem**: Returns True for x=1
+- **Test**: `is_prime(1)` → True (should be False)
+- **Fix**: `is_prime = lambda x: x > 1 and all(map(...))`
+- **Severity**: High
+
+[Continue for all issues found]
+```
+
+### Verification Triggers
+
+Perform content verification when:
+1. **Generating new learning materials**
+2. **Updating existing materials**
+3. **User requests verification** ("检查错误", "verify content")
+4. **Before major assessments**
+5. **After pulling from external sources**
+
+---
+
 ## Step 3: Analyze Results
 
 **Goal**: Interpret assessment results and determine next action.

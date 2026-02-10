@@ -641,7 +641,7 @@ if __name__ == '__main__':
 
 对于Python开发者来说，以下情况需要考虑使用多线程：
 
-1. 程序需要维护许多共享的状态（尤其是可变状态），Python 中的列表、字典、集合都是线程安全的（多个线程同时操作同一个列表、字典或集合，不会引发错误和数据问题），所以使用线程而不是进程维护共享状态的代价相对较小。
+1. 程序需要维护许多共享的状态（尤其是可变状态），Python 中的列表、字典、集合的原子操作（如 `list.append()`）是线程安全的，但复合操作（如 `if x in list: list.remove(x)`）不是线程安全的，多个线程同时操作时需要使用锁或其他同步机制，所以在使用多线程维护共享状态时要特别小心。
 2. 程序会花费大量时间在 I/O 操作上，没有太多并行计算的需求且不需占用太多的内存。
 
 那么在遇到下列情况时，应该考虑使用多进程：
@@ -777,12 +777,10 @@ async def display(num):
     print(num)
 
 
-def main():
+async def main():
     start = time.time()
     objs = [display(i) for i in range(1, 10)]
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(asyncio.wait(objs))
-    loop.close()
+    await asyncio.gather(*objs)
     end = time.time()
     print(f'{end - start:.3f}秒')
 
@@ -827,7 +825,7 @@ async def fetch_page_title(url):
                 print(title)
 
 
-def main():
+async def main():
     urls = [
         'https://www.python.org/',
         'https://www.jd.com/',
@@ -841,13 +839,11 @@ def main():
         'https://www.nasa.gov/'
     ]
     objs = [fetch_page_title(url) for url in urls]
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(asyncio.wait(objs))
-    loop.close()
+    await asyncio.gather(*objs)  # 使用推荐的方式
 
 
 if __name__ == '__main__':
-    main()
+    asyncio.run(main())
 ```
 
 输出：

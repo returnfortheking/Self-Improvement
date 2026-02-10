@@ -503,7 +503,7 @@ print(new_nums)  # [144, 64, 3600, 2704]
 ```python
 old_strings = ['in', 'apple', 'zoo', 'waxberry', 'pear']
 new_strings = sorted(old_strings)
-print(new_strings)  # ['apple', 'in', 'pear', waxberry', 'zoo']
+print(new_strings)  # ['apple', 'in', 'pear', 'waxberry', 'zoo']
 ```
 
 上面的代码对大家来说并不陌生，但是如果希望根据字符串的长度而不是字母表顺序对列表元素排序，我们可以向`sorted`函数传入一个名为`key`的参数，将`key`参数赋值为获取字符串长度的函数`len`，这个函数我们在之前的课程中讲到过，代码如下所示。
@@ -538,7 +538,7 @@ import operator
 fac = lambda n: functools.reduce(operator.mul, range(2, n + 1), 1)
 
 # 用一行代码实现判断素数的函数
-is_prime = lambda x: all(map(lambda f: x % f, range(2, int(x ** 0.5) + 1)))
+is_prime = lambda x: x > 1 and all(map(lambda f: x % f, range(2, int(x ** 0.5) + 1)))
 
 # 调用Lambda函数
 print(fac(6))        # 720
