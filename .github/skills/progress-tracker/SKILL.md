@@ -24,10 +24,14 @@ metadata:
     ↓
 1. 读取核心数据文档（01-09）
 2. 分析当前技能水平和进度
-3. 生成详细进度报告
-4. 删除旧的进度报告（如果存在）
-5. 保存新的进度报告
-6. 输出报告摘要
+3. 🔄 更新核心文档（02、08、09）- 重要！
+   - 02_Skills_Assessment.md：更新技能评估和更新日志
+   - 08_Action_Plan_2026_H1.md：更新学习进度
+   - 09_Progress_Tracker.md：更新阶段进度、每周进度
+4. 生成详细进度报告
+5. 删除旧的进度报告（如果存在）
+6. 保存新的进度报告
+7. 输出报告摘要
 ```
 
 ---
@@ -201,7 +205,27 @@ conversations/summaries/progress_report.md
 3. 学习计划执行情况（从 08_Action_Plan_2026_H1.md）
 4. 目标岗位要求（从 04_Target_Positions_Analysis.md）
 
-### Step 3: 识别关键信息
+### Step 3: 更新核心文档
+
+**重要**：在生成 progress_report.md 之前，必须先更新核心文档！
+
+**更新 02_Skills_Assessment.md**：
+- 添加/更新"更新日志"章节
+- 记录最新的技能评估结果
+- 更新技能等级变化
+
+**更新 08_Action_Plan_2026_H1.md**：
+- 更新"最后更新"时间戳
+- 更新当前周次的学习进度
+- 标记已完成的学习内容（✅）
+
+**更新 09_Progress_Tracker.md**：
+- 更新阶段进度百分比
+- 更新每周进度记录
+- 添加知识空缺记录
+- 更新学习时间统计
+
+### Step 4: 识别关键信息
 
 **必须提取**：
 - 当前阶段和完成度
@@ -210,11 +234,15 @@ conversations/summaries/progress_report.md
 - 已完成的里程碑
 - 进度滞后的项目
 
+### Step 5: 生成建议
+
+**基于规则 4 的智能决策**
+
 ### Step 4: 生成建议
 
 **基于规则 4 的智能决策**
 
-### Step 5: 保存报告
+### Step 6: 保存报告
 
 **操作**：
 ```bash
@@ -225,7 +253,7 @@ rm -f conversations/summaries/progress_report.md
 write("conversations/summaries/progress_report.md", report_content)
 ```
 
-### Step 6: 输出摘要
+### Step 7: 输出摘要
 
 **显示给用户的内容**（简洁版）
 
@@ -281,9 +309,10 @@ conversations/summaries/progress_report.md
 
 | 版本 | 日期 | 变更 |
 |------|------|------|
+| v1.1 | 2026-02-12 | 修复流程缺陷：添加 Step 3 更新核心文档（02、08、09），确保核心文档与 progress_report.md 同步 |
 | v1.0 | 2026-02-07 | 初始版本 - 维护单个进度文档，删除旧的生成新的 |
 
 ---
 
 **维护者**: Progress Tracker Team
-**最后更新**: 2026-02-07
+**最后更新**: 2026-02-12

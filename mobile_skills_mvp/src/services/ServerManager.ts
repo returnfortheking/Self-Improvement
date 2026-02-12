@@ -83,15 +83,26 @@ export class ServerManager {
     const startTime = Date.now();
 
     try {
+      // 创建 AbortController 实现超时
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 秒超时
+
       const response = await fetch(`${server.url}/global/health`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
         },
-        signal: AbortSignal.timeout(10000), // 10 秒超时
+        signal: controller.signal,
       });
 
+      clearTimeout(timeoutId);
       const responseTime = Date.now() - startTime;
+
+      console.log(`[ServerManager] Health check ${server.name}:`, {
+        ok: response.ok,
+        status: response.status,
+        responseTime,
+      });
 
       if (response.ok) {
         const data = await response.json();
@@ -109,6 +120,8 @@ export class ServerManager {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
       }
     } catch (error) {
+      console.error(`[ServerManager] Health check failed for ${server.name}:`, error);
+
       const status: ServerStatus = {
         healthy: false,
         lastCheck: Date.now(),

@@ -11,13 +11,13 @@ import { ServerConfig } from './ServerManager.types';
 export const DEFAULT_SERVERS: ServerConfig[] = [
   {
     name: 'Mac Mini',
-    url: 'https://mac-mini-xxxx.ngrok-free.dev', // 需要替换为实际的 ngrok 地址
+    url: 'https://raquel-tiniest-disrespectfully.ngrok-free.dev',
     priority: 1,
     enabled: true,
   },
   {
     name: 'Windows PC',
-    url: 'https://windows-pc-xxxx.ngrok-free.dev', // 需要替换为实际的 ngrok 地址
+    url: 'https://rousingly-childlike-latarsha.ngrok-free.dev',
     priority: 2,
     enabled: true,
   },
